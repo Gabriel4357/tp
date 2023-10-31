@@ -1,5 +1,5 @@
-# User Guide for HomeBoss
-
+# User Guide for HomeBoss 
+<a name="top"></a>
 This comprehensive user guide is your key to a seamless start with our cutting-edge software designed specifically for
 home-based businesses. Our solution is tailored to enhance the efficiency of managing delivery addresses, simplifying
 your operations. Within these pages, you'll find detailed coverage of the following essential topics:
@@ -479,3 +479,28 @@ _DELIVERY_ID_: Integer
 ### Remove customer from delivery `[Coming Soon in v1.3]`
 
 _Details coming soon..._
+
+Sample: 
+
+### Update customer details   
+>Updates the personal details of an existing customer in the address book.
+
+Did you accidentally key in the wrong details for a customer? Or perhaps your customer has changed his particulars? No 
+worries! You can  edit the details of a customer simply by calling this command.
+
+**Format:** `customer edit CUSTOMER_ID [--name NAME] [--phone PHONE_NUMBER] [--email EMAIL] [--address ADDRESS]`
+
+<div style="padding: 15px; border: 1px solid transparent; border-color: transparent; margin-bottom: 20px; border-radius: 4px; color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6;">
+[!Note] [ ] around a parameter indicates that it is optional.
+</div>
+
+Examples: 
+- `customer edit 1 --name Gabriel -–phone 9813 1051` </br>
+Edits customer 1's name to Gabriel and phone to 9813 1051.
+- `customer edit 2 --name Joe --email yangyang@gmail.com -–address Block 10 Tampines Road` </br>
+Edits customer 2's name to Joe, email to yangyang@gmail.com and address to Block 10 Tampines Road.\
+<ins>Before:
+![Screenshot 2023-10-31 at 2.31.41 AM.png](..%2F..%2FScreenshot%202023-10-31%20at%202.31.41%20AM.png)
+<ins>After: 
+![Screenshot 2023-10-31 at 2.38.29 AM.png](..%2F..%2FScreenshot%202023-10-31%20at%202.38.29%20AM.png)
+  [&uarr; Back to Table of Contents](#top)
