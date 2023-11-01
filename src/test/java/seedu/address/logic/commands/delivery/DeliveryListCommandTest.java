@@ -47,7 +47,7 @@ public class DeliveryListCommandTest {
         assertCommandListSuccess(new DeliveryListCommand(DeliveryStatus.COMPLETED, 2, null, null), model,
             DeliveryListCommand.MESSAGE_SUCCESS, model);
 
-        // delivery date
+        // expected delivery date
         assertCommandListSuccess(
             new DeliveryListCommand(DeliveryStatus.COMPLETED, null, new DeliveryDate(VALID_DELIVERY_DATE_1), null),
             model,
@@ -174,7 +174,7 @@ public class DeliveryListCommandTest {
         // different customer id -> returns false
         assertNotEquals(deliveryListCommand6, deliveryListCommand5);
 
-        // different delivery date -> returns false
+        // different expected delivery date -> returns false
         assertNotEquals(deliveryListCommand7, deliveryListCommand8);
     }
 }

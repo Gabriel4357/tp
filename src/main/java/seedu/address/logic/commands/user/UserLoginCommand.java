@@ -29,6 +29,9 @@ public class UserLoginCommand extends Command {
     public static final String MESSAGE_WRONG_CREDENTIALS = "Wrong username/password";
     public static final String MESSAGE_ALREADY_LOGGED_IN = "You are already logged in!";
 
+    public static final String MESSAGE_NO_REGISTERED_ACCOUNT_FOUND = "No registered account found. "
+            + "Please register an account first.\n" + UserRegisterCommand.MESSAGE_USAGE;
+
     private final User user;
 
     /**
@@ -48,6 +51,11 @@ public class UserLoginCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
+        // Check if there is a stored user
+        if (model.getStoredUser() == null) {
+            throw new CommandException(MESSAGE_NO_REGISTERED_ACCOUNT_FOUND);
+        }
 
         // Logged in user cannot login again
         if (model.getUserLoginStatus()) {

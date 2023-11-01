@@ -21,6 +21,7 @@ import seedu.address.logic.commands.customer.CustomerViewCommand;
 import seedu.address.logic.commands.delivery.DeliveryAddCommand;
 import seedu.address.logic.commands.delivery.DeliveryCreateNoteCommand;
 import seedu.address.logic.commands.delivery.DeliveryDeleteCommand;
+import seedu.address.logic.commands.delivery.DeliveryEditCommand;
 import seedu.address.logic.commands.delivery.DeliveryFindCommand;
 import seedu.address.logic.commands.delivery.DeliveryListCommand;
 import seedu.address.logic.commands.delivery.DeliveryStatusCommand;
@@ -37,6 +38,7 @@ import seedu.address.logic.parser.customer.CustomerEditCommandParser;
 import seedu.address.logic.parser.customer.CustomerFindCommandParser;
 import seedu.address.logic.parser.customer.CustomerViewCommandParser;
 import seedu.address.logic.parser.delivery.DeliveryCreateNoteCommandParser;
+import seedu.address.logic.parser.delivery.DeliveryEditCommandParser;
 import seedu.address.logic.parser.delivery.DeliveryFindCommandParser;
 import seedu.address.logic.parser.delivery.DeliveryStatusCommandParser;
 import seedu.address.logic.parser.delivery.DeliveryViewCommandParser;
@@ -122,6 +124,9 @@ public class AddressBookParser {
 
         case DeliveryDeleteCommand.COMMAND_WORD:
             return new DeliveryDeleteCommandParser().parse(arguments);
+
+        case DeliveryEditCommand.COMMAND_WORD:
+            return new DeliveryEditCommandParser().parse(arguments);
 
         case DeliveryFindCommand.COMMAND_WORD:
             return new DeliveryFindCommandParser().parse(arguments);

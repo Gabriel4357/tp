@@ -40,7 +40,7 @@ public class CustomerViewCommandTest {
     @Test
     public void execute_invalidTargetId_throwsCommandException() {
         CustomerViewCommand customerViewCommand = new CustomerViewCommand(-1);
-        assertCommandFailure(customerViewCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(customerViewCommand, model, Messages.MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX);
     }
 
     @Test

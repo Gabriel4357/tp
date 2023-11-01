@@ -28,7 +28,7 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.delivery.Delivery;
 import seedu.address.model.person.Customer;
 import seedu.address.model.user.User;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.CustomerBuilder;
 import seedu.address.ui.ListItem;
 
 public class CustomerAddCommandTest {
@@ -41,7 +41,7 @@ public class CustomerAddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Customer validCustomer = new PersonBuilder().build();
+        Customer validCustomer = new CustomerBuilder().build();
 
         CommandResult commandResult = new CustomerAddCommand(validCustomer).execute(modelStub);
 
@@ -52,18 +52,20 @@ public class CustomerAddCommandTest {
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() {
-        Customer validCustomer = new PersonBuilder().build();
+        Customer validCustomer = new CustomerBuilder().build();
         CustomerAddCommand customerAddCommand = new CustomerAddCommand(validCustomer);
         ModelStub modelStub = new ModelStubWithPerson(validCustomer);
 
+
         assertThrows(CommandException.class,
-                CustomerAddCommand.MESSAGE_DUPLICATE_PERSON, () -> customerAddCommand.execute(modelStub));
+                CustomerAddCommand.MESSAGE_DUPLICATE_CUSTOMER, () -> customerAddCommand.execute(modelStub));
+
     }
 
     @Test
     public void execute_personAcceptedByModelLoggedOut_addFailure() throws Exception {
         ModelStubAcceptingPersonAddedLoggedOut modelStub = new ModelStubAcceptingPersonAddedLoggedOut();
-        Customer validCustomer = new PersonBuilder().build();
+        Customer validCustomer = new CustomerBuilder().build();
 
         CustomerAddCommand customerAddCommand = new CustomerAddCommand(validCustomer);
 
@@ -73,8 +75,8 @@ public class CustomerAddCommandTest {
 
     @Test
     public void equals() {
-        Customer alice = new PersonBuilder().withName("Alice").build();
-        Customer bob = new PersonBuilder().withName("Bob").build();
+        Customer alice = new CustomerBuilder().withName("Alice").build();
+        Customer bob = new CustomerBuilder().withName("Bob").build();
         CustomerAddCommand addAliceCommand = new CustomerAddCommand(alice);
         CustomerAddCommand addBobCommand = new CustomerAddCommand(bob);
 
@@ -172,6 +174,11 @@ public class CustomerAddCommandTest {
         }
 
         @Override
+        public Customer getCustomerUsingFilteredList(int id) {
+            return null;
+        }
+
+        @Override
         public boolean hasPerson(Customer customer) {
             throw new AssertionError("This method should not be called.");
         }
@@ -255,6 +262,10 @@ public class CustomerAddCommandTest {
         public ObservableList<Delivery> getSortedDeliveryList() {
             throw new AssertionError("This method should not be called.");
         }
+        @Override
+        public Delivery getDeliveryUsingFilteredList(int id) {
+            throw new AssertionError("This method should not be called.");
+        }
 
         @Override
         public void updateFilteredDeliveryList(Predicate<Delivery> predicate) {
@@ -312,6 +323,11 @@ public class CustomerAddCommandTest {
 
         @Override
         public void updateUser(User user) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public String getLoginStatus() {
             throw new AssertionError("This method should not be called.");
         }
 

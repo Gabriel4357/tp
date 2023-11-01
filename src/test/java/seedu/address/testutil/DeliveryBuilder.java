@@ -17,7 +17,7 @@ import seedu.address.model.person.Customer;
 public class DeliveryBuilder {
     public static final int DEFAULT_ID = 1;
     public static final DeliveryName DEFAULT_NAME = new DeliveryName("Gabriels");
-    public static final Customer DEFAULT_CUSTOMER = new PersonBuilder().withName("Gabriel Seethor")
+    public static final Customer DEFAULT_CUSTOMER = new CustomerBuilder().withName("Gabriel Seethor")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("94351253").build();
 

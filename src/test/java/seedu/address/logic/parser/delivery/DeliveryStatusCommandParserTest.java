@@ -4,10 +4,11 @@ import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ID_NAN;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ID_NEGATIVE;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_STATUS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_CANCELLED;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_CANCELLED_VIEW;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_COMPLETED_VIEW;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_CREATED;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_SHIPPED;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_CREATED_VIEW;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_STATUS_SHIPPED_VIEW;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -27,19 +28,21 @@ public class DeliveryStatusCommandParserTest {
     public void parse_allFields_success() {
         // CREATED
         DeliveryStatusCommand deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.CREATED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_CREATED, deliveryStatusCommand);
+        assertParseSuccess(parser, " 1 " + VALID_STATUS_CREATED_VIEW, deliveryStatusCommand);
 
         // SHIPPED
         deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.SHIPPED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_SHIPPED, deliveryStatusCommand);
+
+        assertParseSuccess(parser, " 1 " + VALID_STATUS_SHIPPED_VIEW, deliveryStatusCommand);
 
         // COMPLETED
         deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.COMPLETED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_COMPLETED, deliveryStatusCommand);
+        assertParseSuccess(parser, " 1 " + VALID_STATUS_COMPLETED_VIEW, deliveryStatusCommand);
 
         // CANCELLED
         deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.CANCELLED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_CANCELLED, deliveryStatusCommand);
+        assertParseSuccess(parser, " 1 " + VALID_STATUS_CANCELLED_VIEW, deliveryStatusCommand);
+
     }
 
     @Test
@@ -63,13 +66,17 @@ public class DeliveryStatusCommandParserTest {
     @Test
     public void parse_statusLowerCase_success() {
         DeliveryStatusCommand deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.CREATED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_CREATED.toLowerCase(), deliveryStatusCommand);
+
+        assertParseSuccess(parser, "1 " + VALID_STATUS_CREATED_VIEW.toLowerCase(), deliveryStatusCommand);
+
     }
 
     @Test
     public void parse_statusUpperCase_success() {
         DeliveryStatusCommand deliveryStatusCommand = new DeliveryStatusCommand(1, DeliveryStatus.CREATED);
-        assertParseSuccess(parser, "1 " + VALID_STATUS_CREATED.toUpperCase(), deliveryStatusCommand);
+
+        assertParseSuccess(parser, "1 " + VALID_STATUS_CREATED_VIEW.toUpperCase(), deliveryStatusCommand);
+
     }
 
     @Test

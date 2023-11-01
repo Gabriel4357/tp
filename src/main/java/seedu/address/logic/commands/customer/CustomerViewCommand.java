@@ -1,6 +1,6 @@
 package seedu.address.logic.commands.customer;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_USER_NOT_AUTHENTICATED;
 
 import java.util.Optional;
@@ -44,7 +44,7 @@ public class CustomerViewCommand extends CustomerCommand {
         Optional<Customer> customer = model.getCustomer(customerId);
 
         if (customer.isEmpty()) {
-            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX);
         }
 
         return new CommandResult(Messages.format(customer.get()));

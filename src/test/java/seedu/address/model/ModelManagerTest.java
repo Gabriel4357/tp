@@ -99,6 +99,21 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void getCustomerUsingFilteredList_invalidId_retunsNull() {
+        Customer customer = modelManager.getCustomerUsingFilteredList(1);
+        assertEquals(null, customer);
+    }
+
+    @Test
+    public void getCustomerUsingFilteredList_validId_returnsCustomer() {
+        modelManager.setLoginSuccess();
+        modelManager.addPerson(ALICE);
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_CUSTOMERS);
+        Customer customer = modelManager.getCustomerUsingFilteredList(1);
+        assertEquals(ALICE, customer);
+    }
+
+    @Test
     public void hasPerson_nullPerson_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasPerson(null));
     }
@@ -188,7 +203,7 @@ public class ModelManagerTest {
     public void equals() {
         AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
         DeliveryBook deliveryBook =
-            new DeliveryBookBuilder().withDelivery(GABRIELS_MILK).withDelivery(GAMBES_RICE).build();
+                new DeliveryBookBuilder().withDelivery(GABRIELS_MILK).withDelivery(GAMBES_RICE).build();
         AddressBook differentAddressBook = new AddressBook();
         DeliveryBook differentDeliveryBook = new DeliveryBook();
         UserPrefs userPrefs = new UserPrefs();
@@ -249,5 +264,53 @@ public class ModelManagerTest {
         modelManager.setLoggedInUser(user);
         assertTrue(modelManager.userMatches(user));
         assertFalse(modelManager.userMatches(wrongUser));
+    }
+
+    @Test
+    public void getLoginStatus_storedUserAndLoggedIn_success() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        DeliveryBook deliveryBook =
+                new DeliveryBookBuilder().withDelivery(GABRIELS_MILK).withDelivery(GAMBES_RICE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setAuthenticationPath(Paths.get("src/test/data/Authentication", "authentication.json"));
+        Model modelManager = new ModelManager(addressBook, deliveryBook, userPrefs, true);
+        User loggedInUser = modelManager.getStoredUser();
+
+        String expectedMessage = "Hello " + loggedInUser.getUsername() + ".";
+        String actualMessage = modelManager.getLoginStatus();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void getLoginStatus_storedUserAndLoggedOut_success() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        DeliveryBook deliveryBook =
+                new DeliveryBookBuilder().withDelivery(GABRIELS_MILK).withDelivery(GAMBES_RICE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setAuthenticationPath(Paths.get("src/test/data/Authentication", "authentication.json"));
+        Model modelManager = new ModelManager(addressBook, deliveryBook, userPrefs, false);
+        User loggedInUser = modelManager.getStoredUser();
+
+        String expectedMessage = "Logged out. Please login to continue.";
+        String actualMessage = modelManager.getLoginStatus();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void getLoginStatus_noStoredUser_success() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        DeliveryBook deliveryBook =
+                new DeliveryBookBuilder().withDelivery(GABRIELS_MILK).withDelivery(GAMBES_RICE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setAuthenticationPath(Paths.get("src/test/data/Authentication", "authentication.json"));
+        Model modelManager = new ModelManager(addressBook, deliveryBook, userPrefs, false);
+        modelManager.setLoggedInUser(null);
+
+        String expectedMessage = "No account found. Please register an account.";
+        String actualMessage = modelManager.getLoginStatus();
+
+        assertEquals(expectedMessage, actualMessage);
     }
 }

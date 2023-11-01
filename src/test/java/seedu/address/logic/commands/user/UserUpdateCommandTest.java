@@ -14,8 +14,15 @@ import static seedu.address.testutil.TypicalDeliveries.getTypicalDeliveryBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Logger;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.customer.CustomerEditCommand;
@@ -28,23 +35,40 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Customer;
 import seedu.address.model.user.User;
+import seedu.address.testutil.CustomerBuilder;
 import seedu.address.testutil.CustomerEditDescriptorBuilder;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.UpdateUserDescriptorBuilder;
 import seedu.address.testutil.UserBuilder;
 
 public class UserUpdateCommandTest {
+
+    @TempDir
+    public Path tempDir;
     private Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(), new UserPrefs(), true);
+    private final Logger logger = Logger.getLogger(UserUpdateCommandTest.class.getName());
 
     @BeforeEach
     public void setUp() {
-        // set the stored user with default values
-        model.setLoggedInUser(new UserBuilder().build());
+        Path source = Paths.get("src/test/data/Authentication", "authentication.json");
+        Path target = tempDir.resolve("tempAuthentication.json");
+        // copy the authentication file to the temp directory
+        try {
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            logger.info("Error copying authentication.json to tempDir");
+        }
+
+        UserPrefs tempPrefs = new UserPrefs();
+        tempPrefs.setAuthenticationFilePath(target);
+
+        model.setUserPrefs(tempPrefs); // should store user based on the authentication file in tempDir
+
     }
 
     @Test
     public void execute_allFieldsSpecified_success() {
-        User updatedUser = new UserBuilder().build();
+
+        User updatedUser = model.getStoredUser();
         UserUpdateDescriptor descriptor = new UpdateUserDescriptorBuilder(updatedUser).build();
         UserUpdateCommand updateCommand = new UserUpdateCommand(descriptor);
 
@@ -52,7 +76,7 @@ public class UserUpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new DeliveryBook(model.getDeliveryBook()),
-                new UserPrefs(), model.getUserLoginStatus());
+                new UserPrefs(model.getUserPrefs()), model.getUserLoginStatus());
         expectedModel.setLoggedInUser(updatedUser);
 
         assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel, true);
@@ -69,7 +93,7 @@ public class UserUpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new DeliveryBook(model.getDeliveryBook()),
-                new UserPrefs(), model.getUserLoginStatus());
+                new UserPrefs(model.getUserPrefs()), model.getUserLoginStatus());
         expectedModel.setLoggedInUser(updatedUser);
 
         assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel, true);
@@ -86,7 +110,7 @@ public class UserUpdateCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()),
                 new DeliveryBook(model.getDeliveryBook()),
-                new UserPrefs(), model.getUserLoginStatus());
+                new UserPrefs(model.getUserPrefs()), model.getUserLoginStatus());
         expectedModel.setLoggedInUser(updatedUser);
 
         assertCommandSuccess(updateCommand, model, expectedMessage, expectedModel, true);
@@ -97,7 +121,7 @@ public class UserUpdateCommandTest {
         // set state of model to be logged out
         model.setLogoutSuccess();
 
-        Customer editedCustomer = new PersonBuilder().build();
+        Customer editedCustomer = new CustomerBuilder().build();
         CustomerEditDescriptor descriptor = new CustomerEditDescriptorBuilder(editedCustomer).build();
         CustomerEditCommand editCommand = new CustomerEditCommand(INDEX_FIRST_PERSON, descriptor);
 

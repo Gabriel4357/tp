@@ -40,7 +40,7 @@ public class DeliveryAddDescriptorTest {
         editedMilk = new DeliveryAddDescriptorBuilder(DESC_MILK).withCustomerId(VALID_CUSTOMER_ID_2).build();
         assertFalse(DESC_MILK.equals(editedMilk));
 
-        // different delivery date -> returns false
+        // different expected delivery date -> returns false
         editedMilk = new DeliveryAddDescriptorBuilder(DESC_MILK).withDeliveryDate(VALID_DELIVERY_DATE_2).build();
         assertFalse(DESC_MILK.equals(editedMilk));
 

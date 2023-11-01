@@ -10,8 +10,9 @@ import java.util.Comparator;
  * Represents a Date in the address book.
  */
 public class Date implements Comparable<Date> {
+    public static final String FORMAT = "yyyy-MM-dd";
     public static final String MESSAGE_CONSTRAINTS =
-        "Order dates should be in the format YYYY-MM-DD";
+        "Order dates should be in the format " + FORMAT;
 
     public static final String VALIDATION_REGEX = "\\d{4}-\\d{2}-\\d{2}";
 

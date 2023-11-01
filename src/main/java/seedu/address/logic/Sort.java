@@ -1,5 +1,6 @@
 package seedu.address.logic;
 
+
 /**
  * Represents the sort order of the list.
  */

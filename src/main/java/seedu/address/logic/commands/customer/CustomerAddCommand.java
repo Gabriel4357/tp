@@ -34,7 +34,7 @@ public class CustomerAddCommand extends CustomerCommand {
             + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25";
 
     public static final String MESSAGE_SUCCESS = "New customer added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This customer already exists in HomeBoss";
+    public static final String MESSAGE_DUPLICATE_CUSTOMER = "This customer already exists in HomeBoss";
 
     private final Customer toAdd;
 
@@ -56,7 +56,7 @@ public class CustomerAddCommand extends CustomerCommand {
         }
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(MESSAGE_DUPLICATE_CUSTOMER);
         }
 
         model.addPerson(toAdd);

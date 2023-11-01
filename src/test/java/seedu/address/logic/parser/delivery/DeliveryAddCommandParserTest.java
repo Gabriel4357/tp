@@ -6,10 +6,11 @@ import static seedu.address.logic.commands.CommandTestUtil.DELIVERY_DATE_DESC_MI
 import static seedu.address.logic.commands.CommandTestUtil.DESC_MILK;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_CUSTOMER_ID_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_DATE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DELIVERY_NAME;
 import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_MILK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_CUSTOMER_ID_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DELIVERY_DATE_1;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_GABRIELS_MILK;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
@@ -29,8 +30,7 @@ public class DeliveryAddCommandParserTest {
     public void parse_allFieldsPresent_success() {
         DeliveryAddDescriptor expectedDescriptor = new DeliveryAddDescriptor(DESC_MILK);
 
-        // whitespace only preamble
-        assertParseSuccess(parser, NAME_DESC_MILK + CUSTOMER_ID_DESC_MILK
+        assertParseSuccess(parser, VALID_NAME_GABRIELS_MILK + CUSTOMER_ID_DESC_MILK
                 + DELIVERY_DATE_DESC_MILK, new DeliveryAddCommand(expectedDescriptor));
     }
 
@@ -41,7 +41,7 @@ public class DeliveryAddCommandParserTest {
         assertParseFailure(parser, NAME_DESC_MILK + VALID_CUSTOMER_ID_1
                 + DELIVERY_DATE_DESC_MILK, expectedMessage);
 
-        // missing delivery date prefix
+        // missing expected delivery date prefix
         assertParseFailure(parser, NAME_DESC_MILK + CUSTOMER_ID_DESC_MILK
                 + VALID_DELIVERY_DATE_1, expectedMessage);
     }
@@ -71,19 +71,20 @@ public class DeliveryAddCommandParserTest {
     }
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        // delivery add <name> --customer <customer id> --date <delivery date>
+        // delivery add <name> --customer <customer id> --date <expected delivery date>
 
         // invalid name
-        assertParseFailure(parser, INVALID_NAME_DESC + CUSTOMER_ID_DESC_MILK
+        assertParseFailure(parser, INVALID_DELIVERY_NAME + CUSTOMER_ID_DESC_MILK
                 + DELIVERY_DATE_DESC_MILK, DeliveryName.MESSAGE_CONSTRAINTS);
 
-        // invalid delivery date
-        assertParseFailure(parser, NAME_DESC_MILK + CUSTOMER_ID_DESC_MILK
+        // invalid expected delivery date
+        assertParseFailure(parser, VALID_NAME_GABRIELS_MILK + CUSTOMER_ID_DESC_MILK
+
                 + INVALID_DELIVERY_DATE_DESC, DeliveryDate.MESSAGE_CONSTRAINTS);
 
         // invalid customer id
-        assertParseFailure(parser, NAME_DESC_MILK + INVALID_CUSTOMER_ID_DESC
-                + DELIVERY_DATE_DESC_MILK, MESSAGE_INVALID_INDEX);
+        assertParseFailure(parser, VALID_NAME_GABRIELS_MILK + INVALID_CUSTOMER_ID_DESC
+               + DELIVERY_DATE_DESC_MILK, MESSAGE_INVALID_INDEX);
 
     }
 }

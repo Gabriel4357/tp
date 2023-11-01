@@ -25,6 +25,8 @@ public interface Storage extends UserPrefsStorage {
     // ===== AddressBook =================================================================
     Path getAddressBookFilePath();
 
+    Path getAddressBookParentPath();
+
     Optional<ReadOnlyBook<Customer>> readAddressBook() throws DataLoadingException;
 
     Optional<ReadOnlyBook<Customer>> readAddressBook(Path filePath) throws DataLoadingException;

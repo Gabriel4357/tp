@@ -1,7 +1,7 @@
 package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -37,7 +37,7 @@ import seedu.address.storage.JsonAddressBookStorage;
 import seedu.address.storage.JsonDeliveryBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.CustomerBuilder;
 import seedu.address.ui.ListItem;
 
 public class LogicManagerTest {
@@ -54,9 +54,9 @@ public class LogicManagerTest {
     public void setUp() {
         model.setLoginSuccess();
         JsonAddressBookStorage addressBookStorage =
-            new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
         JsonDeliveryBookStorage deliveryBookStorage =
-            new JsonDeliveryBookStorage(temporaryFolder.resolve("deliveryBook.json"));
+                new JsonDeliveryBookStorage(temporaryFolder.resolve("deliveryBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, deliveryBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
@@ -71,7 +71,7 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "customer delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX);
     }
 
     @Test
@@ -83,13 +83,13 @@ public class LogicManagerTest {
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() {
         assertCommandFailureForExceptionFromStorage(DUMMY_IO_EXCEPTION, String.format(
-            LogicManager.FILE_OPS_ERROR_FORMAT, DUMMY_IO_EXCEPTION.getMessage()));
+                LogicManager.FILE_OPS_ERROR_FORMAT, DUMMY_IO_EXCEPTION.getMessage()));
     }
 
     @Test
     public void execute_storageThrowsAdException_throwsCommandException() {
         assertCommandFailureForExceptionFromStorage(DUMMY_AD_EXCEPTION, String.format(
-            LogicManager.FILE_OPS_PERMISSION_ERROR_FORMAT, DUMMY_AD_EXCEPTION.getMessage()));
+                LogicManager.FILE_OPS_PERMISSION_ERROR_FORMAT, DUMMY_AD_EXCEPTION.getMessage()));
     }
 
     @Test
@@ -138,7 +138,7 @@ public class LogicManagerTest {
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
                                       String expectedMessage) {
         Model expectedModel = new ModelManager(model.getAddressBook(), model.getDeliveryBook(),
-            new UserPrefs(), model.getUserLoginStatus());
+                new UserPrefs(), model.getUserLoginStatus());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 
@@ -173,10 +173,10 @@ public class LogicManagerTest {
             }
         };
         JsonDeliveryBookStorage deliveryBookStorage =
-            new JsonDeliveryBookStorage(temporaryFolder.resolve("deliveryBook.json"));
+                new JsonDeliveryBookStorage(temporaryFolder.resolve("deliveryBook.json"));
 
         JsonUserPrefsStorage userPrefsStorage =
-            new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
+                new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, deliveryBookStorage, userPrefsStorage);
 
         logic = new LogicManager(model, storage);
@@ -184,8 +184,11 @@ public class LogicManagerTest {
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = CustomerAddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
             + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
-        Customer expectedCustomer = new PersonBuilder(AMY)
+
+        Customer expectedCustomer = new CustomerBuilder(AMY)
             .withCustomerId(Customer.getCustomerCount()).build();
+
+
         ModelManager expectedModel = new ModelManager();
         // sets the expected model to be in logged in state
         expectedModel.setLoginSuccess();
@@ -196,19 +199,19 @@ public class LogicManagerTest {
     @Test
     public void getUiListCustomer() {
         ObservableList<ListItem> customers = this.model.getFilteredDeliveryList().stream()
-            .map(delivery -> new ListItem(String.format("[%d] %s", delivery.getDeliveryId(), delivery.getName()),
-                delivery.getOrderDate().toString(), delivery.getDeliveryDate().toString()))
-            .collect(Collectors.toCollection(
-                FXCollections::observableArrayList));
+                .map(delivery -> new ListItem(String.format("[%d] %s", delivery.getDeliveryId(), delivery.getName()),
+                        delivery.getOrderDate().toString(), delivery.getDeliveryDate().toString()))
+                .collect(Collectors.toCollection(
+                        FXCollections::observableArrayList));
 
         model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_CUSTOMERS);
         assertEquals(logic.getUiList(), customers);
 
         ObservableList<ListItem> deliveries = this.model.getFilteredDeliveryList().stream().map(
-                delivery -> new ListItem(String.format("[%d] %s", delivery.getDeliveryId(), delivery.getName()),
-                    delivery.getOrderDate().toString(), delivery.getDeliveryDate().toString()))
-            .collect(Collectors.toCollection(
-                FXCollections::observableArrayList));
+                        delivery -> new ListItem(String.format("[%d] %s", delivery.getDeliveryId(), delivery.getName()),
+                                delivery.getOrderDate().toString(), delivery.getDeliveryDate().toString()))
+                .collect(Collectors.toCollection(
+                        FXCollections::observableArrayList));
 
         model.updateFilteredDeliveryList(Model.PREDICATE_SHOW_ALL_DELIVERIES);
         assertEquals(logic.getUiList(), deliveries);
@@ -217,5 +220,21 @@ public class LogicManagerTest {
         model.sortFilteredDeliveryList(Comparator.comparing(Delivery::getName));
 
         assertEquals(logic.getUiList(), deliveries);
+    }
+
+    @Test
+    public void getLoginStatus() {
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setAuthenticationPath(temporaryFolder.resolve("authentication.json"));
+        model.setUserPrefs(userPrefs);
+        JsonAddressBookStorage addressBookStorage =
+                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonDeliveryBookStorage deliveryBookStorage =
+                new JsonDeliveryBookStorage(temporaryFolder.resolve("deliveryBook.json"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
+        StorageManager storage = new StorageManager(addressBookStorage, deliveryBookStorage, userPrefsStorage);
+        logic = new LogicManager(model, storage);
+
+        assertEquals(logic.getLoginStatus(), model.getLoginStatus());
     }
 }

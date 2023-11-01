@@ -15,9 +15,9 @@ public class Delivery {
     private static int deliveryCount = 1;
 
     // Identity fields
-    private final int deliveryId;
-    private final DeliveryName name;
-    private final Customer customer;
+    private int deliveryId;
+    private DeliveryName name;
+    private Customer customer;
     private OrderDate orderDate;
     private DeliveryDate deliveryDate;
     private DeliveryStatus status;

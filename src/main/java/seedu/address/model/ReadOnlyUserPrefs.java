@@ -16,6 +16,8 @@ public interface ReadOnlyUserPrefs {
 
     Path getDeliveryBookFilePath();
 
+    Path getAuthenticationFilePath();
+
     User getStoredUser();
 
 }

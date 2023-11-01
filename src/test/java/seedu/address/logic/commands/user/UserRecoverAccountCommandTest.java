@@ -1,13 +1,23 @@
 package seedu.address.logic.commands.user;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalDeliveries.getTypicalDeliveryBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.jupiter.api.Test;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -16,6 +26,9 @@ import seedu.address.model.user.User;
 import seedu.address.model.user.Username;
 
 public class UserRecoverAccountCommandTest {
+
+    @TempDir
+    public Path tempDir;
 
     @Test
     public void execute_noUserStored_throwsCommandException() {
@@ -34,28 +47,45 @@ public class UserRecoverAccountCommandTest {
     }
 
     @Test
-    public void execute_userStored_success() {
-        String answer = "answer";
+    public void execute_userStored_success() throws CommandException {
+
+        // copy authentication.json to tempDir
+        Path source = Paths.get("src/test/data/Authentication", "authentication.json");
+        Path target = tempDir.resolve("tempAuthentication.json");
+        try {
+            Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            throw new CommandException("Error copying authentication.json to tempDir");
+        }
+
+        String answer = "answer"; // refer to authentication.json
         Password newPassword = new Password("newPassword");
+        UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setAuthenticationFilePath(target);
 
         // set up model with user stored
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(),
-                new UserPrefs(), true);
-        User user = new User(new Username("username"), new Password("password"),
-                true, "secret question", answer);
-        model.setLoggedInUser(user);
+                userPrefs, true);
 
         UserRecoverAccountCommand userRecoverAccountCommand = new UserRecoverAccountCommand(answer, newPassword);
 
         // copy of model with user updated to new password
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getDeliveryBook(),
-                new UserPrefs(), model.getUserLoginStatus());
-        User newUser = new User(new Username("username"), newPassword,
-                true, "secret question", answer);
-        expectedModel.setLoggedInUser(newUser);
+        UserPrefs newUserPrefs = new UserPrefs();
+        newUserPrefs.setAuthenticationFilePath(Paths.get("src/test/data/Authentication",
+                "authentication_newPassword.json"));
+        Model expectedModel = new ModelManager(model.getAddressBook(), model.getDeliveryBook(),
+                newUserPrefs, model.getUserLoginStatus());
 
-        assertCommandSuccess(userRecoverAccountCommand, model, UserRecoverAccountCommand.MESSAGE_SUCCESS_WITH_FLAGS,
-                expectedModel, false);
+        // everything of the model except the authenticationFilePath and user is the same
+
+        CommandResult actualCommandResult = userRecoverAccountCommand.execute(model);
+        String message = actualCommandResult.getFeedbackToUser();
+
+        assertEquals(message, UserRecoverAccountCommand.MESSAGE_SUCCESS_WITH_FLAGS);
+        assertTrue(model.getStoredUser().hasSameUsername(expectedModel.getStoredUser()));
+        assertEquals(model.getStoredUser().getSecretQuestion(), expectedModel.getStoredUser().getSecretQuestion());
+        assertEquals(model.getStoredUser().getAnswer(), expectedModel.getStoredUser().getAnswer());
+
     }
 
     @Test

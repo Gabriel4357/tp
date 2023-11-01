@@ -18,6 +18,11 @@ public interface BookStorage<T> {
     Path getBookFilePath();
 
     /**
+     * Returns the parent path of the data file.
+     */
+    Path getBookParentPath();
+
+    /**
      * Returns AddressBook data as a {@link ReadOnlyBook}.
      * Returns {@code Optional.empty()} if storage file is not found.
      *

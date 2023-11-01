@@ -1,8 +1,8 @@
 package seedu.address.logic.commands.delivery;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_DELIVERY_DATE;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_USER_NOT_AUTHENTICATED;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CUSTOMER_ID;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
@@ -22,7 +22,6 @@ import seedu.address.model.delivery.DeliveryDate;
 import seedu.address.model.delivery.DeliveryName;
 import seedu.address.model.delivery.DeliveryStatus;
 import seedu.address.model.delivery.OrderDate;
-import seedu.address.model.person.Address;
 import seedu.address.model.person.Customer;
 
 /**
@@ -36,7 +35,7 @@ public class DeliveryAddCommand extends DeliveryCommand {
             + "Parameters: "
             + "DELIVERY_NAME "
             + PREFIX_CUSTOMER_ID + " CUSTOMER_ID "
-            + PREFIX_DATE + " DATE\n "
+            + PREFIX_DATE + " DELIVERY_DATE\n "
             + "Example: " + COMMAND_WORD + " "
             + "furniture "
             + PREFIX_CUSTOMER_ID + " 5 "
@@ -100,7 +99,6 @@ public class DeliveryAddCommand extends DeliveryCommand {
         int customerId = deliveryAddDescriptor.getCustomerId().get();
         Customer customer = null;
         DeliveryDate deliveryDate = null;
-        Address address = null;
 
         LocalDate now = LocalDate.now();
         OrderDate orderDate = new OrderDate(now.toString());
@@ -113,7 +111,7 @@ public class DeliveryAddCommand extends DeliveryCommand {
             customer = customerReadOnlyBook.getById(customerId).get();
 
         } else {
-            throw new CommandException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX);
         }
         if (DeliveryDate.isValidDeliveryDate(deliveryAddDescriptor.getDate().get().toString())) {
             deliveryDate = deliveryAddDescriptor.getDate().get();

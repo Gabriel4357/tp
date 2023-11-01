@@ -31,9 +31,9 @@ import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.delivery.Delivery;
 import seedu.address.model.person.Customer;
 import seedu.address.model.user.User;
+import seedu.address.testutil.CustomerBuilder;
 import seedu.address.testutil.DeliveryAddDescriptorBuilder;
 import seedu.address.testutil.DeliveryBuilder;
-import seedu.address.testutil.PersonBuilder;
 import seedu.address.ui.ListItem;
 
 public class DeliveryAddCommandTest {
@@ -45,7 +45,7 @@ public class DeliveryAddCommandTest {
 
     @Test
     public void execute_deliveryAcceptedByModel_addSuccessful() {
-        PersonBuilder personBuilder = new PersonBuilder();
+        CustomerBuilder personBuilder = new CustomerBuilder();
         Customer validCustomer = personBuilder.build();
 
         ModelStubStoringDeliveries modelStub = new ModelStubStoringDeliveries();
@@ -69,7 +69,7 @@ public class DeliveryAddCommandTest {
 
     @Test
     public void execute_invalidPerson_throwsCommandException() {
-        PersonBuilder personBuilder = new PersonBuilder();
+        CustomerBuilder personBuilder = new CustomerBuilder();
         Customer invalidCustomer = personBuilder.withCustomerId(TOO_LARGE_CUSTOMER_ID).build();
 
         ModelStub modelStub = new ModelStubAcceptingDeliveryAdded();
@@ -78,13 +78,13 @@ public class DeliveryAddCommandTest {
         DeliveryAddCommand deliveryAddCommand = new DeliveryAddCommand(
                 new DeliveryAddDescriptorBuilder(validDelivery).build());
 
-        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX, () ->
+        assertThrows(CommandException.class, Messages.MESSAGE_INVALID_CUSTOMER_DISPLAYED_INDEX, () ->
                 deliveryAddCommand.execute(modelStub));
     }
 
     @Test
     public void execute_invalidDeliveryDate_throwsCommandException() {
-        PersonBuilder personBuilder = new PersonBuilder();
+        CustomerBuilder personBuilder = new CustomerBuilder();
         Customer validCustomer = personBuilder.build();
 
         ModelStub modelStub = new ModelStubAcceptingDeliveryAdded();
@@ -101,7 +101,7 @@ public class DeliveryAddCommandTest {
 
     @Test
     public void execute_deliveryAcceptedByModelLoggedOut_addFailure() {
-        PersonBuilder personBuilder = new PersonBuilder();
+        CustomerBuilder personBuilder = new CustomerBuilder();
         Customer validCustomer = personBuilder.build();
 
         ModelStubAcceptingDeliveryAddedLoggedOut modelStub = new ModelStubAcceptingDeliveryAddedLoggedOut();
@@ -188,6 +188,12 @@ public class DeliveryAddCommandTest {
         }
 
         @Override
+        public Delivery getDeliveryUsingFilteredList(int id) {
+
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<ListItem> getUiList() {
             return null;
         }
@@ -222,6 +228,11 @@ public class DeliveryAddCommandTest {
         @Override
         public Optional<Customer> getCustomer(int id) {
             return Optional.empty();
+        }
+
+        @Override
+        public Customer getCustomerUsingFilteredList(int id) {
+            return null;
         }
 
         @Override
@@ -373,6 +384,12 @@ public class DeliveryAddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
+        @Override
+        public String getLoginStatus() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+
     }
 
     /**
@@ -418,7 +435,7 @@ public class DeliveryAddCommandTest {
 
         @Override
         public ReadOnlyBook<Customer> getAddressBook() {
-            PersonBuilder personBuilder = new PersonBuilder();
+            CustomerBuilder personBuilder = new CustomerBuilder();
             Customer validCustomer = personBuilder.build();
             AddressBook addressBook = new AddressBook();
             addressBook.addPerson(validCustomer);
@@ -456,7 +473,7 @@ public class DeliveryAddCommandTest {
 
         @Override
         public ReadOnlyBook<Customer> getAddressBook() {
-            PersonBuilder personBuilder = new PersonBuilder();
+            CustomerBuilder personBuilder = new CustomerBuilder();
             Customer validCustomer = personBuilder.build();
             AddressBook addressBook = new AddressBook();
             addressBook.addPerson(validCustomer);
@@ -489,7 +506,7 @@ public class DeliveryAddCommandTest {
 
         @Override
         public ReadOnlyBook<Customer> getAddressBook() {
-            PersonBuilder personBuilder = new PersonBuilder();
+            CustomerBuilder personBuilder = new CustomerBuilder();
             Customer validCustomer = personBuilder.build();
             AddressBook addressBook = new AddressBook();
             addressBook.addPerson(validCustomer);

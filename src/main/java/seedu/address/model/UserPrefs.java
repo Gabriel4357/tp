@@ -29,7 +29,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     private GuiSettings guiSettings = new GuiSettings();
     private Path addressBookFilePath = Paths.get("data", "addressbook.json");
     private Path deliveryBookFilePath = Paths.get("data", "deliverybook.json");
-    private Path authenticationPath = Paths.get("data", "authentication.json");
+    private Path authenticationFilePath = Paths.get("data", "authentication.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -53,6 +53,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         setGuiSettings(newUserPrefs.getGuiSettings());
         setAddressBookFilePath(newUserPrefs.getAddressBookFilePath());
         setDeliveryBookFilePath(newUserPrefs.getDeliveryBookFilePath());
+        setAuthenticationFilePath(newUserPrefs.getAuthenticationFilePath());
     }
 
     public GuiSettings getGuiSettings() {
@@ -87,18 +88,18 @@ public class UserPrefs implements ReadOnlyUserPrefs {
      *
      * @return authenticationPath
      */
-    public Path getAuthenticationPath() {
-        return authenticationPath;
+    public Path getAuthenticationFilePath() {
+        return authenticationFilePath;
     }
 
     /**
      * Sets the path of the authentication file.
      *
-     * @param authenticationPath
+     * @param authenticationFilePath
      */
-    public void setAuthenticationPath(Path authenticationPath) {
-        requireNonNull(authenticationPath);
-        this.authenticationPath = authenticationPath;
+    public void setAuthenticationFilePath(Path authenticationFilePath) {
+        requireNonNull(authenticationFilePath);
+        this.authenticationFilePath = authenticationFilePath;
     }
 
     /**
@@ -122,7 +123,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             AuthenticationData authenticationData =
-                    objectMapper.readValue(authenticationPath.toFile(), AuthenticationData.class);
+                    objectMapper.readValue(authenticationFilePath.toFile(), AuthenticationData.class);
 
             // if username in the authentication file is empty, return null
             if ((!Username.isValidUsername(authenticationData.getUsername()))) {
@@ -160,7 +161,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
                             user.getSecretQuestion(), user.getAnswer());
 
             // Serialize the authenticationData to a JSON file
-            objectMapper.writeValue(authenticationPath.toFile(), authenticationData);
+            objectMapper.writeValue(authenticationFilePath.toFile(), authenticationData);
 
             logger.info("User registered: " + user.getUsername());
             return true;
@@ -190,12 +191,12 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         return guiSettings.equals(otherUserPrefs.guiSettings)
                 && addressBookFilePath.equals(otherUserPrefs.addressBookFilePath)
                 && deliveryBookFilePath.equals(otherUserPrefs.deliveryBookFilePath)
-                && authenticationPath.equals(otherUserPrefs.authenticationPath);
+                && authenticationFilePath.equals(otherUserPrefs.authenticationFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, addressBookFilePath, deliveryBookFilePath, authenticationPath);
+        return Objects.hash(guiSettings, addressBookFilePath, deliveryBookFilePath, authenticationFilePath);
     }
 
     @Override
@@ -204,7 +205,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         sb.append("Gui Settings : " + guiSettings);
         sb.append("\nLocal address data file location : " + addressBookFilePath);
         sb.append("\nLocal delivery data file location : " + deliveryBookFilePath);
-        sb.append("\nLocal authentication data file location : " + authenticationPath);
+        sb.append("\nLocal authentication data file location : " + authenticationFilePath);
         return sb.toString();
     }
 
@@ -213,7 +214,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
      */
     public void deleteUser() {
         try {
-            Files.deleteIfExists(Paths.get("data", "authentication.json"));
+            Files.deleteIfExists(authenticationFilePath);
             logger.info("Files deleted successfully.");
         } catch (IOException e) {
             logger.warning("Error deleting files: " + e.getMessage());

@@ -5,9 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import seedu.address.model.user.Password;
 import seedu.address.model.user.User;
@@ -15,10 +17,13 @@ import seedu.address.model.user.Username;
 
 public class UserPrefsTest {
 
+    @TempDir
+    public Path tempDir;
+
     @Test
     public void setGuiSettings_nullGuiSettings_throwsNullPointerException() {
-        UserPrefs userPref = new UserPrefs();
-        assertThrows(NullPointerException.class, () -> userPref.setGuiSettings(null));
+        UserPrefs userPrefs = new UserPrefs();
+        assertThrows(NullPointerException.class, () -> userPrefs.setGuiSettings(null));
     }
 
     @Test
@@ -30,7 +35,7 @@ public class UserPrefsTest {
     @Test
     public void setAuthenticationPath_nullPath_throwsNullPointerException() {
         UserPrefs userPrefs = new UserPrefs();
-        assertThrows(NullPointerException.class, () -> userPrefs.setAuthenticationPath(null));
+        assertThrows(NullPointerException.class, () -> userPrefs.setAuthenticationFilePath(null));
     }
 
     @Test
@@ -42,19 +47,20 @@ public class UserPrefsTest {
     public void getStoredUser_noUserStored_returnsNull() {
         // assume authentication file is empty
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAuthenticationPath(Paths.get("data", ""));
+        userPrefs.setAuthenticationFilePath(Paths.get("src/test/data/Authentication",
+                "authentication_noStoredUser.json"));
         assertTrue(userPrefs.getStoredUser() == null);
     }
 
     @Test
     public void getStoredUser_validUserStored_returnsUser() {
         UserPrefs userPrefs = new UserPrefs();
-        Username username = new Username("gab");
+        Username username = new Username("username");
         Password password = new Password("password");
-        String secretQuestion = "Your first pet's name?";
-        String answer = "koko";
+        String secretQuestion = "Question?";
+        String answer = "answer";
         User user = new User(username, password, true, secretQuestion, answer);
-        userPrefs.setAuthenticationPath(Paths.get("src/test/data/Authentication", "authentication.json"));
+        userPrefs.setAuthenticationFilePath(Paths.get("src/test/data/Authentication", "authentication.json"));
 
         try {
             User storedUser = userPrefs.getStoredUser();
@@ -63,6 +69,7 @@ public class UserPrefsTest {
             System.out.println(e.getMessage());
         }
         assertTrue(userPrefs.getStoredUser() != null);
+        assertEquals(userPrefs.getStoredUser(), user);
     }
 
     @Test
@@ -73,13 +80,15 @@ public class UserPrefsTest {
 
     @Test
     public void registerUser_validUser_success() {
+        Path authTestPath = tempDir.resolve("authTest.json");
         UserPrefs userPrefs = new UserPrefs();
-        Username username = new Username("gab");
+        userPrefs.setAuthenticationFilePath(authTestPath);
+        Username username = new Username("username");
         Password password = new Password("password");
-        String secretQuestion = "Your first pet's name?";
-        String answer = "koko";
+        String secretQuestion = "Question?";
+        String answer = "answer";
         User user = new User(username, password, true, secretQuestion, answer);
-        userPrefs.setAuthenticationPath(Paths.get("src/test/data/Authentication", "authentication.json"));
+
         assertTrue(userPrefs.registerUser(user));
         assertEquals(userPrefs.getStoredUser(), user);
     }
@@ -109,7 +118,7 @@ public class UserPrefsTest {
 
         // different authenticationPath -> returns false
         differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAuthenticationPath(Paths.get("differentFilePath"));
+        differentUserPrefs.setAuthenticationFilePath(Paths.get("differentFilePath"));
         assertFalse(userPrefs.equals(differentUserPrefs));
     }
 
@@ -130,14 +139,14 @@ public class UserPrefsTest {
     @Test
     public void getAuthenticationFilePath() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAuthenticationPath(Paths.get("data", "authentication.json"));
-        assertTrue(userPrefs.getAuthenticationPath().equals(Paths.get("data", "authentication.json")));
+        userPrefs.setAuthenticationFilePath(Paths.get("data", "authentication.json"));
+        assertTrue(userPrefs.getAuthenticationFilePath().equals(Paths.get("data", "authentication.json")));
     }
 
     @Test
     public void deleteUser_noFilesFound_noExceptionThrown() {
         UserPrefs userPrefs = new UserPrefs();
-        userPrefs.setAuthenticationPath(Paths.get("data", ""));
+        userPrefs.setAuthenticationFilePath(Paths.get("data", ""));
         userPrefs.deleteUser();
     }
 

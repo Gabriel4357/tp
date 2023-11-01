@@ -74,13 +74,13 @@ public class DeliveryListCommand extends DeliveryCommand {
         }
 
         if (deliveryDate != null) {
-            // filter by delivery date
+            // filter by expected delivery date
             filters = filters.and(delivery -> delivery.getDeliveryDate().equals(deliveryDate));
         }
 
         model.updateFilteredDeliveryList(filters);
 
-        // sort by delivery date
+        // sort by expected delivery date
         model.sortFilteredDeliveryList(
             sortType.equals(Sort.ASC) ? Comparator.comparing(Delivery::getDeliveryDate) : Comparator.comparing(
                     Delivery::getDeliveryDate)

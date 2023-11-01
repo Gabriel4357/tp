@@ -6,13 +6,13 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 
 import seedu.address.logic.commands.customer.CustomerAddCommand;
-import seedu.address.logic.commands.customer.CustomerEditCommand;
+import seedu.address.logic.commands.customer.CustomerEditCommand.CustomerEditDescriptor;
 import seedu.address.model.person.Customer;
 
 /**
  * A utility class for Person.
  */
-public class PersonUtil {
+public class CustomerUtil {
 
     /**
      * Returns an add command string for adding the {@code person}.
@@ -36,7 +36,8 @@ public class PersonUtil {
     /**
      * Returns the part of command string for the given {@code CustomerEditDescriptor}'s details.
      */
-    public static String getEditPersonDescriptorDetails(CustomerEditCommand.CustomerEditDescriptor descriptor) {
+
+    public static String getEditPersonDescriptorDetails(CustomerEditDescriptor descriptor) {
         StringBuilder sb = new StringBuilder();
         descriptor.getName().ifPresent(name -> sb.append(PREFIX_NAME).append(name.fullName).append(" "));
         descriptor.getPhone().ifPresent(phone -> sb.append(PREFIX_PHONE).append(phone.value).append(" "));

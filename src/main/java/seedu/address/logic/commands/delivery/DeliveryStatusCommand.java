@@ -30,7 +30,7 @@ public class DeliveryStatusCommand extends DeliveryCommand {
             + "by the ID of the delivery. Existing status will be overwritten by the input status.\n"
             + "Parameters: ID (must be a integer representing a valid ID) "
             + "STATUS (must be one of CREATED/SHIPPED/COMPLETED/CANCELLED)\n"
-            + "Example: " + COMMAND_WORD + " COMPLETED 1";
+            + "Example: " + COMMAND_WORD + " 1 COMPLETED";
 
     public static final String MESSAGE_EDIT_DELIVERY_SUCCESS = "Edited Delivery: %1$s";
 

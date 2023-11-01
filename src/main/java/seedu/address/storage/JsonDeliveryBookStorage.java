@@ -45,6 +45,10 @@ public class JsonDeliveryBookStorage extends BookStorageWithReference<Delivery, 
         return filePath;
     }
 
+    public Path getBookParentPath() {
+        return filePath.getParent();
+    }
+
     @Override
     public Optional<ReadOnlyBook<Delivery>> readBook() throws DataLoadingException {
         if (super.getReferenceBook().isEmpty()) {

@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 import seedu.address.logic.Sort;
@@ -43,7 +45,12 @@ public class DeliveryListParser implements Parser<DeliveryListCommand> {
         }
 
         if (inputDate.isPresent()) {
-            deliveryDate = ParserUtil.parseDate(inputDate.get());
+
+            if (inputDate.get().equalsIgnoreCase("today")) {
+                deliveryDate = new Date(LocalDate.now().format(DateTimeFormatter.ofPattern(Date.FORMAT)));
+            } else {
+                deliveryDate = ParserUtil.parseDate(inputDate.get());
+            }
         }
 
 

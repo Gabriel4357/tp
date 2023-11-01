@@ -178,7 +178,7 @@ The `User` model,
 
 The `Delivery` model,
 
-* stores the delivery data i.e, the delivery name, customer, delivery status, order date, delivery date and note for the
+* stores the delivery data i.e, the delivery name, customer, delivery status, order date, expected delivery date and note for the
   delivery.
 
 #### Customer Model
@@ -368,13 +368,13 @@ The sequence of the `register` command is as follows:
    pass1234 --secretQn First Pet? --answer Koko).
 2. Logic Manager calls the `AddressBookParser#parseCommand` with the `INPUT`.
 3. The `AddressBookParser` parses the command word, creating an instance of `UserRegisterCommandParser` to parse the
-   rest of the command.
+rest of the command.
 4. If all fields are present, it checks if password and confirm password match.
 5. If password and confirm password match, it creates an instance of `UserRegisterCommand`.
 6. `Logic Manager` executes `UserRegisterCommand` by calling `UserRegisterCommand#execute()`.
 7. `UserRegisterCommand` checks if a user is already registered by calling `Model#getStoredUser`.
 8. If no user is registered, `UserRegisterCommand` calls `Model#registerUser` to store the user. Login status is set to
-   true.
+true.
 9. `UserRegisterCommand` calls `Model#updateFilteredPersonList` to display the list of customers.
 10. `UserRegisterCommand` returns a `CommandResult` with a success message.
 
@@ -403,10 +403,10 @@ The format of the `delivery list` command can be found
 7. If the status was provided, the status is used to filter the current delivery list with the specified status.
 8. If the customer id was provided, the customer id is used to filter the current delivery list with the specified
    customer id.
-9. If the delivery date was provided, the delivery date is used to filter the current delivery list with the specified
-   delivery date.
+9. If the expected delivery date was provided, the expected delivery date is used to filter the current delivery list 
+   with the specified expected delivery date.
 10. If the sort was provided, the sort is used to sort the current delivery list. By default, the deliveries will be
-    sorted in descending order of their delivery date.
+    sorted in descending order of their expected delivery date.
 11. The list on the ui will be updated with the filtered and sorted deliveries.
 12. If the command completed successfully, a `CommandResult` object will be created, and returned.
 
@@ -429,14 +429,14 @@ The sequence of the `delivery list` command is as follows:
 6. If status is not null, `DeliveryListCommand` will call `Model#updateFilteredDeliveryListByStatus(Predicate)` to
    filter the
    delivery list by the specified status.
-7. If delivery date is not null, `DeliveryListCommand` will call `Model#updateFilteredDeliveryListByStatus(Predicate)`
-   to filter the delivery list by the specified date.
+7. If expected delivery date is not null, `DeliveryListCommand` will call 
+   `Model#updateFilteredDeliveryListByStatus(Predicate)` to filter the delivery list by the specified date.
 8. If customer id is not null, `DeliveryListCommand` will call `Model#updateFilteredDeliveryListByStatus(Predicate)`
    to filter the delivery list by the specified customer id.
 9. If the sort is `asc`, `DeliveryListCommand` will call `Model#sortFilteredDeliveryList(Comparator)` to sort the
-   delivery list by delivery date in descending order.
-10. Else, `DeliveryListCommand` will call `Model#sortFilteredDeliveryList()` to sort the delivery list by delivery
-    date in descending order.
+   delivery list by expected delivery date in descending order.
+10. Else, `DeliveryListCommand` will call `Model#sortFilteredDeliveryList()` to sort the delivery list by the 
+    expected delivery date in descending order.
 11. It creates a new "CommandResult" with the result of the execution.
 
 The default delivery sort is `asc`.
@@ -501,9 +501,9 @@ The format for the `login` command can be found [here](UserGuide.md#login).
 3. If invalid command parameters are provided, an error message with the correct parameter format will be shown.
 4. If the user is currently logged in, an error message will be shown.
 5. The `User` is then cross-referenced with the stored user in `Model` to check if the credentials match.
-   If incorrect credentials are provided, an error message regarding wrong credentials will be shown.
+If incorrect credentials are provided, an error message regarding wrong credentials will be shown.
 6. If all the previous steps are completed without exceptions, the user will be logged in and the
-   `isLoggedIn` status in `Model` will be updated to `true`.
+`isLoggedIn` status in `Model` will be updated to `true`.
 
 The following activity diagram shows the logic of a user logging in:
 
@@ -512,14 +512,14 @@ The following activity diagram shows the logic of a user logging in:
 The sequence of the `login` command is as follows:
 
 1. Upon launching the application, the `ModelManager` will be initialized with
-   the `User` constructed with details from the authentication.json file.
+the `User` constructed with details from the authentication.json file.
 2. The user inputs the `login` command with the username and password.
 3. The `userLoginCommandParser` checks whether all the required fields are present.
-   If all fields are present, it creates a new `userLoginCommand`.
+If all fields are present, it creates a new `userLoginCommand`.
 4. The `userLoginCommand` checks whether the user is currently logged in by calling `Model#getUserLoginStatus()`.
 5. The `userLoginCommand` then checks if the user credentials match the stored user by calling `Model#userMatches()`.
 6. If the user is not logged in and the credentials match, the `userLoginCommand` calls `Model#setLoginSuccess()`,
-   changing the login status to true and enabling the user access to all commands.
+changing the login status to true and enabling the user access to all commands.
 7. The `userLoginCommand` also calls `Model#updateFilteredPersonList()` to display the list of customers.
 
 The following sequence diagram shows how the `login` command works:
@@ -542,7 +542,7 @@ The format for the `logout` command can be found [here](UserGuide.md#logout).
 2. If extra command parameters are provided after specifying `logout`, the logout command will still be executed.
 3. If the user is currently logged out, an error message will be shown.
 4. If all the previous steps are completed without exceptions, the user will be logged out and the
-   `isLoggedIn` status in `Model` will be updated to `false`.
+`isLoggedIn` status in `Model` will be updated to `false`.
 
 The following activity diagram shows the logic of a user logging out:
 
@@ -552,9 +552,9 @@ The sequence of the `logout` command is as follows:
 
 1. The user inputs the `logout` command.
 2. A new `userLogoutCommand` is created and checks whether the user is currently logged out
-   by calling `Model#getUserLoginStatus()`.
+by calling `Model#getUserLoginStatus()`.
 3. If the user is currently logged in, the `userLogoutCommand` calls `Model#setLogoutSuccess()`,
-   changing the login status to false and restricting the user access to most commands.
+changing the login status to false and restricting the user access to most commands.
 4. The `userLoginCommand` also calls `Model#updateFilteredPersonList()` to hide the list of customers.
 
 The following sequence diagram shows how the `login` command works:
@@ -615,8 +615,8 @@ The format for the `customer edit` command can be found [here](UserGuide.md#upda
 **Feature details:**
 
 1. The user specifies the customer id of the `Customer` to be edited, followed by at least one of the information
-fields to be edited,`Name`, `Phone`, `Email` or/and `Address`.
-e.g.(`customer edit 1 --name John --phone 92149601`)
+   fields to be edited,`Name`, `Phone`, `Email` or/and `Address`.
+   e.g.(`customer edit 1 --name John --phone 92149601`)
 2. If no fields are provided, an error message will prompt the user to key in at least one of the fields.
 3. If the customer id provided is negative or zero, an error message will prompt the user to key in an unsigned
 positive integer.
@@ -656,7 +656,7 @@ The following sequence diagram shows how the `customer edit` command works:
 **Overview:**
 
 The `delivery add` command is used to add a new Delivery with all the given information fields
-specified by the user, namely the delivery's `DeliveryName`, customer id of a `Customer` and `DeliveryDate`. All 
+specified by the user, namely the delivery's `DeliveryName`, customer id of a `Customer` and `DeliveryDate`. All
 fields are compulsory.
 
 The format for the `delivery add` command can be found [here](UserGuide.md#create-delivery).
@@ -666,8 +666,8 @@ The format for the `delivery add` command can be found [here](UserGuide.md#creat
 1. The user inputs `delivery add`, followed by the `DeliveryName`, customer id of a `Customer` and `DeliveryDate`.
 e.g.(delivery add --name Chocolate Cake --customer 1 --date 2024-10-10)
 2. If no fields or incorrect fields are provided, an error message will inform the user of the correct command usage.
-3. If the delivery date provided is before today's date, an error message will prompt the user to key in a date that
-   is today or after today.
+3. If the expected delivery date provided is before today's date, an error message will prompt the user to key in a 
+   date that is today or after today.
 4. The customer id provided is then cross-referenced with the stored customer list in `Model` to ensure that
    it corresponds to an existing `Customer`. If the customer id is not tied to any `Customer`, an error message will
    inform the user that that is the case.
@@ -849,39 +849,35 @@ thereby improving efficiency for business owners.
 
 Priorities: High (must have) - `***`, Medium (nice to have) - `**`, Low (unlikely to have) - `*`
 
-| Priority | As a …​            | I want to …​                                                                  | So that I can…​                                                                                                                                                                         |
-|----------|--------------------|-------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `***`    | an owner           | create a local account                                                        | I can personalise and secure my account.                                                                                                                                                |
-| `***`    | a registered owner | log in to my local account                                                    | I can access my data.                                                                                                                                                                   |
-| `***`    | a forgetful owner  | retrieve my account                                                           | I can still recover my data.                                                                                                                                                            |
-| `***`    | a logged-in owner  | log out of my account                                                         | I can keep my data secure.                                                                                                                                                              |
-| `***`    | a registered owner | update my password                                                            | I can constantly keep my data secure.                                                                                                                                                   |
-| `***`    | a registered owner | delete my account                                                             | I can have greater control over my data and account removal for privacy reasons.                                                                                                        |
-| `***`    | a registered owner | update my details                                                             | I can change my personalisation.                                                                                                                                                        |
-| `***`    | a registered owner | create a customer                                                             | I can tie deliveries to customers’ information.                                                                                                                                         |
-| `***`    | a registered owner | view a customer                                                               | I can see their detailed information.                                                                                                                                                   |
-| `***`    | a registered owner | update a customer                                                             | I can change details if keyed in wrongly.                                                                                                                                               |
-| `***`    | a registered owner | delete a customer                                                             | I can remove redundant or incorrect customer records, especially when unforeseen errors occur.                                                                                          |
-| `***`    | a registered owner | view a list of customers                                                      | I can have a comprehensive overview of my customer base.                                                                                                                                |
-| `***`    | a registered owner | see a list of deliveries sorted by status for the customer                    | I can easily see if products are delivered or not.                                                                                                                                      |
-| `***`    | a registered owner | quickly search for the details of a client                                    | I can monitor the progress of an order efficiently and effectively.                                                                                                                     |
-| `***`    | a registered owner | create a delivery                                                             | I can efficiently organise and access delivery information.                                                                                                                             |
-| `***`    | a registered owner | create notes about deliveries                                                 | I can add additional information about deliveries.                                                                                                                                      |
-| `***`    | a registered owner | view a list of deliveries                                                     | I can plan the optimal route.                                                                                                                                                           |
-| `***`    | a registered owner | see the list of deliveries that would be delivered for the day                | I can prioritise particular orders.                                                                                                                                                     |
-| `***`    | a registered owner | add a customer to a delivery                                                  | I know who the delivery is for.                                                                                                                                                         |
-| `***`    | a registered owner | remove a customer from a delivery                                             | The delivery details are updated.                                                                                                                                                       |
-| `***`    | a registered owner | specify the method of delivery                                                | I know how to send the orders over.                                                                                                                                                     |
-| `***`    | a registered owner | quickly search for the details of a delivery                                  | I can monitor the progress of a                                                                 delivery.                                                                               |
-| `***`    | a registered owner | see a list of deliveries sorted by their delivery status and date of delivery | It is                                                                                                     more organised and easier for me to get and overview of all orders.           |
-| `***`    | a registered owner | see the location of the delivery                                              | I know where to deliver the order to.                                                                                                                                                   |
-| `***`    | a registered owner | view the details of a delivery                                                | I know what the order is and where to deliver it to.                                                                                                                                    |
-| `***`    | a registered owner | update the status of the delivery                                             | I can keep track of the delivery progress and notify my client.                                                                                                                         |
-| `***`    | a registered owner | update delivery details                                                       | I can change any information if there was an error from                                                                                                                        user/me. |
-| `***`    | a registered owner | delete a delivery                                                             | I can get rid of deliveries that are redundant.                                                                                                                                         |
-| `*`      | a registered owner | relate my inventory to my orders                                              | I can keep track of my inventory.                                                                                                                                                       |
-| `*`      | a registered owner | know the sum of all the materials required for a fixed delivery schedule      | I can plan my                                                                                             inventory.                                                                    |
-| `*`      | a registered owner | have different user authorisation levels                                      | I can control who has access to what.                                                                                                                                                   |
+| Priority | As a …​            | I want to …​                                                             | So that I can…​                                                                                                                                                                         |
+|----------|--------------------|--------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `***`    | an owner           | create a local account                                                   | I can personalise and secure my account.                                                                                                                                                |
+| `***`    | a registered owner | log in to my local account                                               | I can access my data.                                                                                                                                                                   |
+| `***`    | a forgetful owner  | retrieve my account                                                      | I can still recover my data.                                                                                                                                                            |
+| `***`    | a logged-in owner  | log out of my account                                                    | I can keep my data secure.                                                                                                                                                              |
+| `***`    | a registered owner | delete my account                                                        | I can have greater control over my data and account removal for privacy reasons.                                                                                                        |
+| `***`    | a registered owner | update my details                                                        | I can change my personalisation.                                                                                                                                                        |
+| `***`    | a registered owner | create a customer                                                        | I can tie deliveries to customers’ information.                                                                                                                                         |
+| `***`    | a registered owner | view a customer                                                          | I can see their detailed information.                                                                                                                                                   |
+| `***`    | a registered owner | see a customer's list of deliveries                                      | I can easily see all the deliveries of a certain customer.                                                                                                                              |
+| `***`    | a registered owner | quickly search for the details of a client                               | I can monitor the progress of an order efficiently and effectively.                                                                                                                     |
+| `***`    | a registered owner | update a customer                                                        | I can change details if keyed in wrongly.                                                                                                                                               |
+| `***`    | a registered owner | delete a customer                                                        | I can remove redundant or incorrect customer records, especially when unforeseen errors occur.                                                                                          |
+| `***`    | a registered owner | view a list of customers                                                 | I can have a comprehensive overview of my customer base.                                                                                                                                |
+| `***`    | a registered owner | create a delivery                                                        | I can efficiently organise and access delivery information.                                                                                                                             |
+| `***`    | a registered owner | create notes about deliveries                                            | I can add additional information about deliveries.                                                                                                                                      |
+| `***`    | a registered owner | view a list of deliveries                                                | I can see a comprehensive overview of my deliveries.                                                                                                                                    |
+| `***`    | a registered owner | see the list of deliveries that would be delivered for the day           | I can prioritise particular orders.                                                                                                                                                     |
+| `***`    | a registered owner | add a customer to a delivery                                             | I know who the delivery is for.                                                                                                                                                         |
+| `***`    | a registered owner | quickly search for the name of a delivery                                | I can monitor the progress of delivery.                                                                                                                                                 |
+| `***`    | a registered owner | see a list of deliveries sorted by their expected date of delivery       | It more organised and easier for me to get an overview of all orders.                                                                                                                   |
+| `***`    | a registered owner | view the details of a delivery                                           | I know what the order is and where to deliver it to.                                                                                                                                    |
+| `***`    | a registered owner | update the status of the delivery                                        | I can keep track of the delivery progress and notify my client.                                                                                                                         |
+| `***`    | a registered owner | update delivery details                                                  | I can change any information if there was an error from                                                                                                                        user/me. |
+| `***`    | a registered owner | delete a delivery                                                        | I can get rid of deliveries that are redundant.                                                                                                                                         |
+| `*`      | a registered owner | relate my inventory to my orders                                         | I can keep track of my inventory.                                                                                                                                                       |
+| `*`      | a registered owner | know the sum of all the materials required for a fixed delivery schedule | I can plan my inventory.                                                                                                                                                                |
+| `*`      | a registered owner | have different user authorisation levels                                 | I can control who has access to what.                                                                                                                                                   |
 
 *{More to be added}*
 
@@ -1412,7 +1408,7 @@ otherwise)
 **MSS:**
 
 1. Logged-in Owner types command to view a list of deliveries.
-2. DMS displays a list of all deliveries sorted in descending delivery date (newest to oldest).
+2. DMS displays a list of all deliveries sorted in descending expected delivery date (newest to oldest).
 
    Use Case Ends.
 
@@ -1428,8 +1424,8 @@ otherwise)
 
       Use Case Ends.
 
-* 1c. User specifies delivery date field in command.
-    * 1c1. DMS displays a list of deliveries filtered by the specified delivery date.
+* 1c. User specifies expected delivery date field in command.
+    * 1c1. DMS displays a list of deliveries filtered by the specified expected delivery date.
 
       Use Case Ends.
 
@@ -1438,17 +1434,17 @@ otherwise)
 
       Use Case Ends.
 
-* 1e. User specifies both status and delivery date fields.
-    * 1e1. DMS displays a list of deliveries filtered by the specified status and delivery date.
+* 1e. User specifies both status and expected delivery date fields.
+    * 1e1. DMS displays a list of deliveries filtered by the specified status and expected delivery date.
 
       Use Case Ends.
 
-* 1f. User specifies both customer and delivery date fields.
-    * 1f1. DMS displays a list of deliveries filtered by the specified customer and delivery date.
+* 1f. User specifies both customer and expected delivery date fields.
+    * 1f1. DMS displays a list of deliveries filtered by the specified customer and expected delivery date.
 
       Use Case Ends.
-* 1g. User specifies customer, delivery date and status fields.
-    * 1g1. DMS displays a list of deliveries filtered by the specified customer, delivery date and status.
+* 1g. User specifies customer, expected delivery date and status fields.
+    * 1g1. DMS displays a list of deliveries filtered by the specified customer, expected delivery date and status.
 
       Use Case Ends.
 
@@ -1458,10 +1454,10 @@ otherwise)
       Use Case Ends.
 
 * 1h. User Specifies both filter fields and sort fields.
-    * 1c1. DMS displays a list of deliveries filtered by the specified filters and then delivery date sorted by the
-      specified sort order.
-
-      Use Case Ends.---
+    * 1c1. DMS displays a list of deliveries filtered by the specified filters and then expected delivery date sorted 
+           by the specified sort order.
+  
+       Use Case Ends.
 
 #### **Use case:** UC16 - Delivery List for the Day
 

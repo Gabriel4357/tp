@@ -61,7 +61,9 @@ public class CustomerFindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
+
         String expectedMessage = String.format(MESSAGE_CUSTOMERS_MATCHED_LISTED, 0, "");
+
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         CustomerFindCommand command = new CustomerFindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
@@ -71,7 +73,9 @@ public class CustomerFindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
+
         String expectedMessage = String.format(MESSAGE_CUSTOMERS_MATCHED_LISTED, 3, "Kurz Elle Kunz");
+
         NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         CustomerFindCommand command = new CustomerFindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);

@@ -61,6 +61,16 @@ public class UserLoginCommandTest {
     }
 
     @Test
+    public void execute_userLoginButNoStoredUserFound_throwsCommandException() {
+        Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(),
+                new UserPrefs(), true);
+        User user = new User(new Username("username"), new Password("password"), false);
+        UserLoginCommand userLoginCommand = new UserLoginCommand(user);
+
+        assertCommandFailure(userLoginCommand, model, UserLoginCommand.MESSAGE_NO_REGISTERED_ACCOUNT_FOUND);
+    }
+
+    @Test
     public void equals() {
         User user = new User(new Username("username"), new Password("password"), false);
         UserLoginCommand userLoginCommand = new UserLoginCommand(user);

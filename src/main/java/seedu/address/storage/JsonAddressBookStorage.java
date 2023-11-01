@@ -32,6 +32,10 @@ public class JsonAddressBookStorage implements BookStorage<Customer> {
         return filePath;
     }
 
+    public Path getBookParentPath() {
+        return filePath.getParent();
+    }
+
     @Override
     public Optional<ReadOnlyBook<Customer>> readBook() throws DataLoadingException {
         return readBook(filePath);

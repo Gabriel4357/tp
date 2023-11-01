@@ -28,6 +28,20 @@ public class JsonAddressBookStorageTest {
     public Path testFolder;
 
     @Test
+    public void getBookFilePath_returnsFilePath() {
+        Path filePath = testFolder.resolve("TempAddressBook.json");
+        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
+        assertEquals(jsonAddressBookStorage.getBookFilePath(), filePath);
+    }
+
+    @Test
+    public void getBookParentPath_returnsParentPath() {
+        Path filePath = testFolder.resolve("TempAddressBook.json");
+        JsonAddressBookStorage jsonAddressBookStorage = new JsonAddressBookStorage(filePath);
+        assertEquals(jsonAddressBookStorage.getBookParentPath(), filePath.getParent());
+    }
+
+    @Test
     public void readAddressBook_nullFilePath_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> readAddressBook(null));
     }

@@ -20,7 +20,9 @@ public class CustomerEditDescriptorTest {
     @Test
     public void equals() {
         // same values -> returns true
-        CustomerEditDescriptor descriptorWithSameValues = new CustomerEditCommand.CustomerEditDescriptor(DESC_AMY);
+
+        CustomerEditDescriptor descriptorWithSameValues = new CustomerEditDescriptor(DESC_AMY);
+
         assertTrue(DESC_AMY.equals(descriptorWithSameValues));
 
         // same object -> returns true

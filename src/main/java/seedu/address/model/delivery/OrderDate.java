@@ -18,7 +18,7 @@ public class OrderDate extends Date {
     }
 
     /**
-     * Returns true if a given string is a valid delivery date.
+     * Returns true if a given string is a valid expected delivery date.
      *
      * @param date A string representing a date.
      * @return True if the date is valid.
@@ -29,7 +29,7 @@ public class OrderDate extends Date {
     }
 
     /**
-     * Returns true if a given string is a valid delivery date.
+     * Returns true if a given string is a valid expected delivery date.
      *
      * @param test A string representing a date.
      * @return True if the date is valid.

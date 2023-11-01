@@ -60,6 +60,10 @@ public class StorageManager implements Storage {
         return addressBookStorage.getBookFilePath();
     }
 
+    public Path getAddressBookParentPath() {
+        return addressBookStorage.getBookParentPath();
+    }
+
     @Override
     public Optional<ReadOnlyBook<Customer>> readAddressBook() throws DataLoadingException {
         return readAddressBook(addressBookStorage.getBookFilePath());

@@ -38,15 +38,19 @@ import seedu.address.model.person.Customer;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.CustomerBuilder;
+
 
 public class CustomerAddCommandParserTest {
     private CustomerAddCommandParser parser = new CustomerAddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
-        Customer expectedCustomer = new PersonBuilder(BOB)
+
+        Customer expectedCustomer = new CustomerBuilder(BOB)
                 .withCustomerId(Customer.getCustomerCount()).build();
+
+
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -54,8 +58,11 @@ public class CustomerAddCommandParserTest {
 
 
         // multiple tags - all accepted
-        Customer expectedCustomerMultipleTags = new PersonBuilder(BOB).withCustomerId(Customer.getCustomerCount())
+
+        Customer expectedCustomerMultipleTags = new CustomerBuilder(BOB).withCustomerId(Customer.getCustomerCount())
                 .build();
+
+
         assertParseSuccess(parser,
             NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB + ADDRESS_DESC_BOB,
             new CustomerAddCommand(expectedCustomerMultipleTags));

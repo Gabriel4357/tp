@@ -6,16 +6,32 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalDeliveries.getTypicalDeliveryBook;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.jupiter.api.Test;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.logging.Logger;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.AddressBook;
+import seedu.address.model.DeliveryBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.user.Password;
 import seedu.address.model.user.User;
 import seedu.address.model.user.Username;
+import seedu.address.storage.StorageManager;
 
 public class UserDeleteCommandTest {
+
+    @TempDir
+    public Path tempDir;
+
+    private Logger logger = LogsCenter.getLogger(StorageManager.class);
 
     @Test
     public void execute_nullModel_throwsNullPointerException() {
@@ -26,28 +42,61 @@ public class UserDeleteCommandTest {
     @Test
     // test when storedUser is null
     public void execute_storedUserDoesNotExist_throwsCommandException() {
+
+        UserPrefs tempPrefs = new UserPrefs();
+        tempPrefs.setAuthenticationFilePath(Paths.get(""));
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(),
-                new UserPrefs(), false);
+                tempPrefs, false);
         UserDeleteCommand userDeleteCommand = new UserDeleteCommand();
 
         assertCommandFailure(userDeleteCommand, model, UserDeleteCommand.MESSAGE_NO_ACCOUNT);
     }
 
     @Test
-    // test success
-    public void execute_storedUserExists_success() {
-        // Create a Model with an initial state where the user is not logged in and
-        // there's no stored user.
+    // test success when user is not logged in and storedUser exists
+    public void execute_deleteWhenLoggedOutAndStoredUserExists_success() {
+        UserPrefs tempPrefs = new UserPrefs();
+        Path source = Paths.get("src/test/data/Authentication", "authentication.json");
+        Path destination = tempDir.resolve("temp.json");
+        try {
+            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            logger.info("Error copying file");
+        }
+        tempPrefs.setAuthenticationFilePath(destination);
+
         Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(),
-                new UserPrefs(), false);
-        User user = new User(new Username("username"), new Password("password"), false);
-        model.setLoggedInUser(user);
+                tempPrefs, false);
 
         UserDeleteCommand userDeleteCommand = new UserDeleteCommand();
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), model.getDeliveryBook(),
-                new UserPrefs(), false);
-        expectedModel.deleteUser();
+        ModelManager expectedModel = new ModelManager(new AddressBook(), new DeliveryBook(),
+                model.getUserPrefs(), false);
+        expectedModel.setLoggedInUser(null);
+
+        assertCommandSuccess(userDeleteCommand, model, UserDeleteCommand.MESSAGE_SUCCESS, expectedModel, true);
+    }
+
+    @Test
+    public void execute_deleteWhenLoggedInAndStoredUserExists_success() {
+        UserPrefs tempPrefs = new UserPrefs();
+        Path source = Paths.get("src/test/data/Authentication", "authentication.json");
+        Path destination = tempDir.resolve("temp.json");
+        try {
+            Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
+        } catch (Exception e) {
+            logger.info("Error copying file");
+        }
+        tempPrefs.setAuthenticationFilePath(destination);
+
+        Model model = new ModelManager(getTypicalAddressBook(), getTypicalDeliveryBook(),
+                tempPrefs, true);
+
+        UserDeleteCommand userDeleteCommand = new UserDeleteCommand();
+
+        ModelManager expectedModel = new ModelManager(new AddressBook(), new DeliveryBook(),
+                model.getUserPrefs(), false);
+        expectedModel.setLoggedInUser(null);
 
         assertCommandSuccess(userDeleteCommand, model, UserDeleteCommand.MESSAGE_SUCCESS, expectedModel, true);
     }

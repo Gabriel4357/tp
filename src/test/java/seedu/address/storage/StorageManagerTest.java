@@ -71,6 +71,11 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void getAddressBookParentPath() {
+        assertNotNull(storageManager.getAddressBookParentPath());
+    }
+
+    @Test
     public void deliveryBookReadSave() throws Exception {
         /*
          * Note: This is an integration test that verifies the StorageManager is properly wired to the
