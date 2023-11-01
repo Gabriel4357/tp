@@ -1,5 +1,6 @@
 package seedu.address.logic.parser.user;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ANSWER_DESC_AARON;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PASSWORD_CONFIRM_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_PASSWORD_DESC;
@@ -7,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_USERNAME_DESC
 import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_CONFIRM_DESC_AARON;
 import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_CONFIRM_DESC_FOODBEAR;
 import static seedu.address.logic.commands.CommandTestUtil.PASSWORD_DESC_AARON;
+import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.SECRET_QUESTION_DESC_AARON;
 import static seedu.address.logic.commands.CommandTestUtil.USERNAME_DESC_AARON;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ANSWER_AARON;
@@ -92,6 +94,10 @@ public class UserUpdateCommandParserTest {
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, INVALID_USERNAME_DESC + INVALID_PASSWORD_DESC
                         + INVALID_PASSWORD_CONFIRM_DESC, Username.MESSAGE_CONSTRAINTS);
+
+        // non-empty preamble
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + USERNAME_DESC_AARON,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, UserUpdateCommand.MESSAGE_USAGE));
     }
 
     @Test

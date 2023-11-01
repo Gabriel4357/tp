@@ -207,6 +207,7 @@ public class ModelManager implements Model {
     @Override
     public void deletePerson(Customer target) {
         addressBook.removePerson(target);
+        deleteDeliveryByCustomer(target);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_CUSTOMERS);
     }
 

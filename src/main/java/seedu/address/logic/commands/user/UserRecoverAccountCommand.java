@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ANSWER;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD_CONFIRM;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CUSTOMERS;
 
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
@@ -89,7 +90,8 @@ public class UserRecoverAccountCommand extends Command {
         User newUser = new User(storedUser.getUsername(), newPassword, true,
                 storedUser.getSecretQuestion(), storedUser.getAnswer());
         model.resetPassword(newUser);
-        return new CommandResult(MESSAGE_SUCCESS_WITH_FLAGS);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_CUSTOMERS);
+        return new CommandResult(MESSAGE_SUCCESS_WITH_FLAGS, true);
     }
 
     public boolean isShowSecretQuestion() {

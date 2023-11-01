@@ -82,8 +82,9 @@ in [`Ui.java`](https://github.com/AY2324S1-CS2103T-T13-3/tp/tree/master/src/main
 
 <puml src="diagrams/UiClassDiagram.puml" alt="Structure of the UI Component"/>
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`
-, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `ListPanel`
+, `StatusBarFooter`, `HelpWindow` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class
+which captures
 the commonalities between classes that represent parts of the visible GUI.
 
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that
@@ -94,10 +95,13 @@ in [`MainWindow.fxml`](https://github.com/AY2324S1-CS2103T-T13-3/tp/tree/master/
 
 The `UI` component,
 
-- executes user commands using the `Logic` component.
-- listens for changes to `Model` data so that the UI can be updated with the modified data.
+- executes user commands through the `Logic` component.
+- listens for changes to `Model` data through the `Logic` component so that the UI can be updated with the modified
+  data.
 - keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-- depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
+- depends on some classes in the `Model` component, referenced through the `Logic` component as it displays `Customer`
+  and `Delivery` objects residing in the
+  `Model`.
 
 ### Logic component
 
@@ -619,14 +623,14 @@ The format for the `customer edit` command can be found [here](UserGuide.md#upda
    e.g.(`customer edit 1 --name John --phone 92149601`)
 2. If no fields are provided, an error message will prompt the user to key in at least one of the fields.
 3. If the customer id provided is negative or zero, an error message will prompt the user to key in an unsigned
-positive integer.
+   positive integer.
 4. The customer id provided is then cross-referenced with the stored customer list in `Model` to ensure that
-it corresponds to an existing `Customer`. If the customer id is not tied to any `Customer`, an error message will
-inform the user that that is the case.
+   it corresponds to an existing `Customer`. If the customer id is not tied to any `Customer`, an error message will
+   inform the user that that is the case.
 5. If the details provided exactly match the details of the `Customer` that was specified, an error message will inform
    the user that the customer already exists in the address book.
 6. If all the previous steps are completed without exceptions, the fields of the `Customer` that was specified will
-be updated with the new information provided by the user.
+   be updated with the new information provided by the user.
 
 The following activity diagram shows the logic of a user editing a customer's information:
 
@@ -635,15 +639,15 @@ The following activity diagram shows the logic of a user editing a customer's in
 The sequence of the `customer edit` command is as follows:
 
 1. The user inputs the `customer edit` command with `input` as the customer id and `Name`, `Phone`, `Email` and/or
-`Address` as the fields to be edited. e.g.(`customer edit 1 --name John --phone 92149601)
+   `Address` as the fields to be edited. e.g.(`customer edit 1 --name John --phone 92149601)
 2. The `LogicManager` calls `AddressBookParser#parseCommand` to create its corresponding CommandParser.
 3. In this case, the `AddressBookParser` creates an instance of `CustomerEditCommandParser` and calls
-`CustomerEditCommandParser#parse` to parse the given `input` using various parse methods from `ParserUtil` and
+   `CustomerEditCommandParser#parse` to parse the given `input` using various parse methods from `ParserUtil` and
    creates a `CustomerEditDescriptor` object.
 4. The `CustomerEditCommandParser` then creates a `CustomerEditCommand` object. The `CustomerEditCommand` object
-takes in the `CustomerEditDescriptor` instance and the customer id from Step 1 as a parameter.
+   takes in the `CustomerEditDescriptor` instance and the customer id from Step 1 as a parameter.
 5. The `CustomerEditCommand` is then returned to the `LogicManager` where its execute method is called. This creates
-a `Customer` object by calling `CustomerEditCommand#createEditedCustomer`. Also, it edits the `Customer` with the
+   a `Customer` object by calling `CustomerEditCommand#createEditedCustomer`. Also, it edits the `Customer` with the
    customer id input in Step 1. This is done by calling `Model#setCustomer`.
 6. With the `Customer` specified edited, a `CommandResult` with a success message is then returned.
 
@@ -664,7 +668,7 @@ The format for the `delivery add` command can be found [here](UserGuide.md#creat
 **Feature details:**
 
 1. The user inputs `delivery add`, followed by the `DeliveryName`, customer id of a `Customer` and `DeliveryDate`.
-e.g.(delivery add --name Chocolate Cake --customer 1 --date 2024-10-10)
+   e.g.(delivery add --name Chocolate Cake --customer 1 --date 2024-10-10)
 2. If no fields or incorrect fields are provided, an error message will inform the user of the correct command usage.
 3. If the expected delivery date provided is before today's date, an error message will prompt the user to key in a 
    date that is today or after today.
@@ -681,8 +685,8 @@ The following activity diagram shows the logic of a user adding a delivery:
 The sequence of the `delivery add` command is as follows:
 
 1. The user inputs the `delivery add` command with `input` as the `DeliveryName`, customer id of a `Customer` and
-`DeliveryDate`.
-e.g.(`delivery add --name Chocolate Cake --customer 1 --date 2024-10-10`)
+   `DeliveryDate`.
+   e.g.(`delivery add --name Chocolate Cake --customer 1 --date 2024-10-10`)
 2. The `LogicManager` calls `AddressBookParser#parseCommand` to create its corresponding CommandParser.
 3. In this case, the `AddressBookParser` creates an instance of `DeliveryAddCommandParser` and calls
    `DeliveryAddCommandParser#parse` to parse the given `input` using various parse methods from `ParserUtil` and
@@ -1845,7 +1849,7 @@ Given below are instructions to test the app manually.
 **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more _exploratory_ testing.
 
-</box>
+</box> 
 
 ### Launch and shutdown
 

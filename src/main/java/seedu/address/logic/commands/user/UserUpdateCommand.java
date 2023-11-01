@@ -33,7 +33,7 @@ public class UserUpdateCommand extends Command {
             + "[" + PREFIX_USER + " USERNAME] "
             + "[" + PREFIX_PASSWORD + " PASSWORD "
             + PREFIX_PASSWORD_CONFIRM + " CONFIRM_PASSWORD] "
-            + "[" + PREFIX_SECRET_QUESTION + " SECRET_PASSWORD "
+            + "[" + PREFIX_SECRET_QUESTION + " SECRET_QUESTION "
             + PREFIX_ANSWER + " ANSWER]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_PASSWORD + " yourNewPassword "
