@@ -4,24 +4,26 @@
 
 # Introduction
 
+Welcome to the _HomeBoss User Guide_! 
+
 HomeBoss is a powerful desktop application designed specifically for **home-based business owners**, offering
-**efficient Customer and Delivery management solutions**. With HomeBoss, you can streamline your administrative
+**efficient Customer and Delivery management solutions**. HomeBoss streamlines your administrative
 processes and elevate your overall business experience to new heights.
 
-With our application, you will be able to:
+HomeBoss allows you to:
 
 * Keep track of the details of your Customers and Deliveries
 * Search for a particular Customer / Delivery easily
 * Organise your data in a neat and tidy manner by filtering and sorting to your needs </br>
   and much more!
 
-HomeBoss's goal is to improve your efficiency and productivity in managing your Customers and Deliveries, all while
+HomeBoss improves your efficiency and productivity in managing your Customers and Deliveries, all while
 being incredibly simple to use.
 HomeBoss is not only **tailored for fast typists**, leveraging a Command Line Interface (CLI) for **swift command
 execution**, but it also features an elegant Graphical User Interface (GUI) that presents your data in a **more refined
 and organized** fashion.
 
-With HomeBoss, you can now **focus on what matters most: running your business.**
+HomeBoss ensures that you **focus on what matters most: running your business.**
 
 
 
@@ -29,23 +31,23 @@ With HomeBoss, you can now **focus on what matters most: running your business.*
 
 # Table of Contents
 
-&nbsp;&nbsp;1\. [Introduction](#introduction)</br>
+**&nbsp;&nbsp;1\. [Introduction](#introduction)</br>
 &nbsp;&nbsp;2\. [Table of Contents](#table-of-contents)</br>
 &nbsp;&nbsp;3\. [About this User Guide](#about-this-user-guide)</br>
 &nbsp;&nbsp;4\. [Navigating the User Guide](#navigating-the-user-guide)</br>
-&nbsp;&nbsp;5\. [Getting Started](#getting-started)</br>
+&nbsp;&nbsp;5\. [Getting Started](#getting-started)</br>**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.1. [Prerequisites](#prerequisites)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.2. [Installing HomeBoss](#installing-homeboss)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.3. [Understanding our layout](#understanding-our-layout)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.4. [HomeBoss Command Format](#homeboss-command-format)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.5. [Registering and creating your first Delivery](#registering-and-creating-your-first-delivery)</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.6. [Editing the data file](#editing-the-data-file) </br>
-&nbsp;&nbsp;6\. [Feature Summary](#feature-summary)</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5.6. [Editing the data files](#editing-the-data-files) </br>
+**&nbsp;&nbsp;6\. [Feature Summary](#feature-summary)</br>**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.1. [User features summary](#user-features-summary)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.2. [Customer features summary](#customer-features-summary)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.3. [Delivery features summary](#delivery-features-summary)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6.4. [Miscellaneous features summary](#miscellaneous-features-summary)</br>
-&nbsp;&nbsp;7\. [Features](#features)</br>
+**&nbsp;&nbsp;7\. [Features](#features)</br>**
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1. [User](#user)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1.1. [Register](#register)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.1.2. [Login](#login)</br>
@@ -73,20 +75,19 @@ With HomeBoss, you can now **focus on what matters most: running your business.*
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.4.1. [Help](#help)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.4.2. [Exit](#exit)</br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7.4.3. [Clear](#clear)</br>
-&nbsp;&nbsp;8\. [FAQ](#faq)</br>
-&nbsp;&nbsp;9\. [Command Summary](#command-summary)</br>
+**&nbsp;&nbsp;8\. [FAQ](#faq)</br>**
+**&nbsp;&nbsp;9\. [Command Summary](#command-summary)</br>**
 
 <div style="page-break-after: always;"></div><br/>
 
 # About this User Guide
 
-This user guide provides you with everything that you need to know when using HomeBoss.
+This user guide provides in-depth documentation on HomeBoss' installation process, explanation of its graphical components, the structure of the commands and features available to the User. In addition, this guide also provides troubleshooting tips and answers to frequently asked questions.
 
 If you are new to HomeBoss, head over to the [Getting Started](#getting-started) section for a quick overview
-on how to get started.
+on how to get started. 
 
-Additionally, this user guide provides you with detailed explanations of all the features available
-in the [Features](#features) section.
+You can find detailed explanations of all the features available in the [Features](#features) section.
 
 For experienced users, you may refer to the [Command Summary](#command-summary) section for a quick summary of all the
 commands available in HomeBoss.
@@ -150,14 +151,20 @@ If you're unsure what a prefix is, you can refer to the [HomeBoss Command Format
 * A [&uarr; Back to Table of Contents](#table-of-contents) link is available at the end of every section
   for you to return to the Table of Contents, so that you can access another section from there easily. <br/>
 
-<br/>
+<div style="page-break-after: always;"></div><br/>
 
 **Syntax Highlighting**
 
 * Words in `code COLOUR`{.swift} represent the command format that you should use when entering commands into HomeBoss.
   <br/><br/>
 
-* Words in `code NORMAL` represent actual words that you can enter into HomeBoss. <br/>
+* Words in `code NORMAL` represent actual words that you can enter into HomeBoss. <br/><br/>
+
+**Screenshots**
+
+* Screenshots are added below each example where it helps enhance the clarity of the **expected outcome** from running the command that precedes it. <br/><br/>
+
+* Whereever the explanation that follows each command is sufficient to convey the expected outcome, screenshots are omitted to reduce clutter. <br/>
 
 <br/>
 
@@ -218,15 +225,17 @@ files / folders before the application is launched for the first time.
 
 5. If you are a first time user, we highly recommend reading the following sections to familiarise yourself with
    HomeBoss's layout and commands:
-    * [Understanding our layout](#understanding-our-layout) <br/>
-    * [HomeBoss Command Format](#homeboss-command-format) <br/>
-    * [Registering and creating your first Delivery](#registering-and-creating-your-first-delivery)
+
+* [Understanding our layout](#understanding-our-layout)
+  
+* [HomeBoss Command Format](#homeboss-command-format)
+  
+* [Registering and creating your first Delivery](#registering-and-creating-your-first-delivery)
 
 <!-- ![HomeBoss Start Page](images/getting-started/register.png) -->
 <div style="text-align:center">
   <img src="images/getting-started/register.png" alt="HomeBoss Start Page" width="500"/>
 </div>
-<br/>
 
 [&uarr; Back to Table of Contents](#table-of-contents)
 
@@ -245,10 +254,6 @@ so that you can familiarise yourself with our various components.
 the application for the first time.
 
 </box>
-
-<br/>
-
-[&uarr; Back to Table of Contents](#table-of-contents)
 
 <div style="page-break-after: always;"></div>
 
@@ -287,7 +292,7 @@ You can use the scroll bar on the right to scroll through a long result or feedb
     </tr>
 </table>
 
-The Customer / Delivery List panel is where you will be able to find the Customers and Deliveries that you have added to
+The Customer / Delivery List Panel is where you will be able to find the Customers and Deliveries that you have added to
 HomeBoss. You can use the scroll bar on the right to scroll through your Customers or Deliveries.
 
 <br/>
@@ -330,7 +335,7 @@ delivery add DELIVERY_NAME --customer CUSTOMER_ID --date EXPECTED_DELIVERY_DATE
 
 * The **Command Phrase** is `delivery add`{.swift}.
 * The **Parameters** are the words in uppercase, for example `DELIVERY_NAME`{.swift} or `CUSTOMER_ID`{.swift}.
-* The **Prefixes** are special keywords that are preceded by `--`{.swift}, such as `--customer`{.swift} and
+* The **Prefixes** are special keywords that are preceded by `--`{.swift}, such as `--customer`{.swift} and<br/>
   `--date`{.swift}.
 
 <br />
@@ -370,19 +375,18 @@ logout
   considered valid.
 * A Command Phrase is made up of keywords or short phrases that are unique to each Command.
 * Words in uppercase are parameters that are supplied by you.
-* Parameters that are preceded by a prefix must be supplied after that prefix, e.g. `--name DELIVERY_NAME`{.swift}
-  must be given as, for instance, `--name furniture` and not `furniture` or `--name`.
-* Items that are placed in square brackets (`[]`{.swift}) are optional, e.g. `DELIVERY_ID [--name DELIVERY_NAME]`{.swift} can either be `1` or `1 --name furniture`.
-* However, items that are grouped together in square brackets (`[]`{.swift}) must all be provided together,
-  e.g. for `[--password PASSWORD --confirmPass CONFIRM_PASSWORD]`{.swift} both `PASSWORD`{.swift} and
+* Parameters that are preceded by a prefix must be supplied after that prefix.<br/>e.g. `--name DELIVERY_NAME`{.swift}
+  must be given as `--name furniture` and not `furniture` or `--name`.
+* Items that are placed in square brackets (`[]`{.swift}) are optional. <br/>e.g. `DELIVERY_ID [--name DELIVERY_NAME]`{.swift} can either be `1` or <br/>`1 --name furniture`.
+* However, items that are grouped together in square brackets (`[]`{.swift}) must all be provided together.
+  <br/>e.g. for `[--password PASSWORD --confirmPass CONFIRM_PASSWORD]`{.swift} both `PASSWORD`{.swift} and
   `CONFIRM_PASSWORD`{.swift} must be provided.
-* Extraneous parameters for commands without parameters, like `customer list`{.swift} or `clear`{.swift}
-  , will be disregarded, as seen in examples such as `customer list 123`.
-* Parameters that have `...`{.swift} as a postfix can be given one or more times, e.g. `KEYWORDS...`{.swift} can be
+* Extraneous parameters for commands without parameters, like `customer list`{.swift} or `clear`{.swift}, will be disregarded. <br/>e.g. `customer list 123` will be treated as `customer list`.
+* Parameters that have `...`{.swift} as a postfix can be given one or more times.<br/>e.g. `KEYWORDS...`{.swift} can be
   given as `Keyword` or `Keyword AnotherKeyword`.
-* **Command Phrase** and **Prefixes** are **case-sensitive**! e.g. `clear`{.swift} is a valid command word but
+* **Command Phrase** and **Prefixes** are **case-sensitive**! <br/>e.g. `clear`{.swift} is a valid command word but
   `customer LIST` is not a valid command word.
-* Leading and trailing whitespaces of parameters will be trimmed, i.e., spaces added between `--password`{.swift}
+* Leading and trailing whitespaces of parameters will be trimmed.<br/>e.g. spaces added between `--password`{.swift}
   and `PASSWORD`{.swift} in `--password PASSWORD`{.swift} will be removed.
 
   </box>
@@ -426,7 +430,7 @@ found [here](#register).
 2. After registering for an account, you will be greeted by HomeBoss's home page. It's empty at the moment, so let's
    populate it with some data.
 
-3. Let's now add a new Customer, `Gabriel`, to HomeBoss' Customer database using the `customer add`{.swift} command.
+3. Let's now add a new Customer, `Gabriel`, to HomeBoss' Customer database using the `customer add`{.swift} command with the following details:
 
 * `NAME`{.swift} : Gabriel
 * `PHONE`{.swift} : 87654321
@@ -454,7 +458,7 @@ found [here](#register).
 
 <div style="page-break-after: always;"></div>
 
-8. A new Delivery should have been added for `Gabriel`, you should see a new Delivery in the Delivery List panel,
+8. A new Delivery should have been added for `Gabriel`, you should see a new Delivery in the Delivery List Panel,
    similar to the image shown below.
 
 ![DeliveryAdded](images/getting-started/delivery_add.png){style="display: block; margin: 0 auto;"}
@@ -470,23 +474,32 @@ Check them out under the [Features](#features) section to learn more!
 
 <div style="page-break-after: always;"></div>
 
-## <br/><span style="text-decoration:underline; font-size:29px"><strong>Editing the data file</strong></span>
+## <br/><span style="text-decoration:underline; font-size:29px"><strong>Editing the data files</strong></span>
 
 HomeBoss stores your data in three JSON files,
-namely `[JAR file location]/data/authentication.json`, `[JAR file location]/data/addressbook.json` (containing the
-customer database) and `[JAR file location]/data/deliverybook.json` (containing the delivery database). Advanced
-users are welcome to update the data by editing the data files directly.
+namely
+* `[JAR file location]/data/authentication.json` (containing the authentication data)
+* `[JAR file location]/data/addressbook.json` (containing the
+Customer database)
+* `[JAR file location]/data/deliverybook.json` (containing the Delivery database).
+
+Advanced users are welcome to update the data by editing the data files directly. However, please note that we do not provide support for any issues that arise from this.
 
 <br/>
 
 <box type="warning" background-color="#f2dede" border-color="#ebccd1" icon=":exclamation:">
 
-**Warning:** If either the `addressbook.json` or `deliverybook.json` data file is edited and contain invalid data as a
+**Warning:** 
+* If either the `addressbook.json` or `deliverybook.json` data file is edited and contain invalid data as a
 result, HomeBoss will discard the entire data file
-and start with an empty data file on the next application run. (e.g., If `deliverybook.json` contains invalid data, the
-entire
-Delivery database will be reset on the next application run. However, if `deliverybook.json` contains invalid data while
-the `addressbook.json` remains untouched and valid, the Customer database will remain unaffected.)
+and start with an empty data file on the next application run. 
+
+  * If `deliverybook.json` contains invalid data while
+the `addressbook.json` remains untouched and valid, the Customer database will remain unaffected.
+
+   * On the other hand, if `addressbook.json` contains invalid data, regardless of the validity of the data in `deliverybook.json`, both the Customer and Delivery database will be completely reset on the next application run since the Delivery database is dependent on the Customer database.
+
+* It's not recommended to edit the `authentication.json` data file directly as it may result in the inability to log in to your account and other unintended effects.
 
 </box>
 
@@ -519,7 +532,7 @@ _These are features for managing your Customers in HomeBoss._
 - `customer add` - Adds a Customer to the Customer database.
 - `customer view` - Shows the details of the specified Customer.
 - `customer list` - Lists all Customers in the Customer database.
-- `customer find` - Finds Customers whose names contain any of the given keywords.
+- `customer find` - Finds Customers whose names contain words that exactly match any of the given keywords.
 - `customer edit` - Updates the details of an existing Customer in the Customer database.
 - `customer delete` - Deletes the specified Customer from the Customer database.
 
@@ -529,10 +542,10 @@ _These are features for managing your Deliveries in HomeBoss._
 
 - `delivery add` - Adds a Delivery to the Delivery database.
 - `delivery view` - Shows the details of the specified Delivery.
-- `delivery list` - Lists all Deliveries in the delivery book.
-- `delivery find` - Finds Deliveries whose names contain any of the given keywords.
+- `delivery list` - Lists Deliveries in the Delivery database according to the specified conditions.
+- `delivery find` - Finds Deliveries with names containing words that exactly match any of the given keywords.
 - `delivery edit` - Updates the details of an existing Delivery in the Delivery database.
-- `delivery status` - Changes the status of a specified Delivery.
+- `delivery status` - Updates the status of a specified Delivery.
 - `delivery note` - Creates a note for a specified Delivery.
 - `delivery delete` - Deletes the specified Delivery from the Delivery database.
 
@@ -593,8 +606,24 @@ You can register for a new user account with HomeBoss by calling this command.
 
 * `register --user yourUsername --password GabrielIsGreat --confirmPass GabrielIsGreat --secretQn First Pet Name? --answer Koko`</br>
 
-  Registers a new user account with the username `yourUsername`, password `GabrielIsGreat`, secret
+<box type="neutrality" seamless>
+
+  **Explanation**
+
+  This registers a new user account with the username `yourUsername`, password `GabrielIsGreat`, secret
   question `First Pet Name?` and answer `Koko`.
+
+  <br/>**Expected Outcome**
+
+
+  ```
+    Registration successful. 
+    
+    
+    Welcome to HomeBoss!
+  ```
+</box>
+
 
 <br/>
 
@@ -645,7 +674,9 @@ You can log in to your account to access your Customer and Delivery data by call
 
   Logs in to the user account with the username `yourUsername` and password `GabrielIsGreat`.
 
+<br/>**Expected Outcome:**
 ![](images/ug/login_data.png)
+
 </br>
 
 [&uarr; Back to Table of Contents](#table-of-contents)
@@ -860,8 +891,6 @@ number, email and address.
 
 ![](images/ug/customer_view.png)
 
-<br/>
-
 [&uarr; Back to Table of Contents](#table-of-contents)
 
 <div style="page-break-after: always;"></div><br/>
@@ -902,8 +931,9 @@ given keywords.
 * You can optionally provide additional keywords. Customer names that matches any of the given keywords will be
   displayed. For example, the keywords `Alex` and `Tan` in `Alex Tan` will display `Alex Wong`, `Alex Tan`,
   and `Tan Ah Meng`.<br/><br/>
-* The keyword must exactly match any word in the Customer's name. For example the keyword `Alex` will match `Alex` but
+* The keyword must exactly match any word in the Customer's name. For example, the keyword `Alex` will match `Alex` but
   not `Alexander`.<br/><br/>
+* You can input any keyword, even if it's not a valid name. For example, even though names contain a strict requirement to include only alphanumeric characters, you still have the flexibility to search for keywords that contain non-alphanumeric characters e.g. `A_lex`.<br/><br/>
 * The search is not case sensitive.<br/>
 
 </box>
@@ -920,7 +950,7 @@ given keywords.
 
 **Parameters:**
 
-* Each `KEYWORD`{.swift} must be alphanumeric and cannot contain spaces.<br/><br/>
+* Each `KEYWORD`{.swift} cannot contain spaces. Spaces are used to differentiate between various keywords.<br/><br/>
 * If there's more than one `KEYWORD`{.swift}, there has to be a space between each `KEYWORD`{.swift}.<br/>
 
 </box>
@@ -1034,13 +1064,16 @@ Delivery-related commands.
 
 **Note:**
 
-* Deliveries consist of a Delivery name, a Customer ID, an order date, an expected Delivery date, a Delivery status and
-  an address to ship to. </br></br>
+* Deliveries consist of a Delivery name, a Customer ID, an order date, an expected Delivery date, a Delivery status, an address to ship to, and a Delivery note (optional). The Delivery note can be added only after the creation of a Delivery, using the `delivery note`{.swift} command [here](#create-a-note-for-a-delivery).
+
 * You don't have to fill in order date, Delivery status and address. Instead they will be initialised with these values:
+  
     * Order date: Today's date
+  
     * Delivery status: `CREATED`
+  
     * Address: Customer's address
-      <br/></br>
+
 * Delivery status can be one of `CREATED`, `SHIPPED`, `COMPLETED`, `CANCELLED`. <br/>
 
 </box>
@@ -1201,7 +1234,7 @@ whose names has words that exactly match any of the given keywords.
 
 **Parameters:**
 
-* Each `KEYWORD`{.swift} must be alphanumeric and cannot contain spaces.<br/><br/>
+* Each `KEYWORD`{.swift} cannot contain spaces. Spaces are used to differentiate between various keywords.<br/><br/>
 * If there's more than one `KEYWORD`{.swift}, there has to be a space between each `KEYWORD`{.swift}.<br/>
 
 </box>
@@ -1278,7 +1311,7 @@ in the event that you keyed in the Delivery's details wrongly.
 
 * If you only want to update the Delivery's status, simply use `delivery status`{.swift} instead. </br><br/>
 * Delivery status is not case sensitive. You can type `created` instead of `CREATED` and it will still work. </br><br/>
-* If you only want to update the Delivery's note, simply use `delivery note`{.swift} instead.<br/>
+* If you only want to create or update the Delivery's note, you can use `delivery note`{.swift} instead as a shortcut.<br/>
   </box>
 
 <br/>
